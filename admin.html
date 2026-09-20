@@ -717,11 +717,39 @@ tbody tr:hover{background:var(--cream-2)}
             <input type="number" id="pRating" min="0" max="5" step="0.1" placeholder="4.8" value="4.8">
           </div>
           <div class="fld full">
-            <label>Image URL or Unsplash ID *</label>
-            <input type="text" id="pImg" required placeholder="Full URL (https://...) OR Unsplash photo ID" oninput="previewImage()">
-            <small>Example: <b>1521572163474-6864f9cf17ab</b> or full https URL</small>
-            <div class="img-preview" id="imgPreview">Image preview</div>
-          </div>
+  <label>Product Image *</label>
+  
+  <!-- Upload tabs -->
+  <div style="display:flex;gap:8px;margin-bottom:10px">
+    <button type="button" class="btn btn-ghost btn-sm" id="tabUrl" onclick="switchImgTab('url')" style="flex:1">
+      🔗 Paste URL
+    </button>
+    <button type="button" class="btn btn-ghost btn-sm" id="tabUpload" onclick="switchImgTab('upload')" style="flex:1">
+      📁 Upload File
+    </button>
+  </div>
+
+  <!-- URL input -->
+  <div id="imgUrlBox">
+    <input type="text" id="pImg" placeholder="https://... OR Unsplash photo ID" oninput="previewImage()">
+    <small>Example: <b>1521572163474-6864f9cf17ab</b> or full https URL</small>
+  </div>
+
+  <!-- File upload -->
+  <div id="imgUploadBox" style="display:none">
+    <input type="file" id="pImgFile" accept="image/*" onchange="handleImageUpload(event)" style="display:none">
+    <button type="button" class="btn btn-ghost" style="width:100%;padding:16px" onclick="document.getElementById('pImgFile').click()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+      Choose Image File
+    </button>
+    <small style="display:block;margin-top:8px;font-size:11px;color:var(--muted)">
+      ⚠️ Max size 200KB. Larger images should be hosted elsewhere (Imgur, Cloudinary).
+    </small>
+  </div>
+
+  <div class="img-preview" id="imgPreview" style="margin-top:12px">Image preview</div>
+  <input type="hidden" id="pImgData" value="">
+  </div>
           <div class="fld full">
             <label>Colours</label>
             <div class="color-inputs" id="colorInputs">
