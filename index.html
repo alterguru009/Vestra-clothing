@@ -1115,7 +1115,7 @@ function placeOrder(){
       placedAt: new Date().toISOString()
     };
     // Save order to Firebase so admin panel can see it
-    if(window.__fb && window.__fbOrderSave){
+    if(window.__fbOrderSave){
       window.__fbOrderSave(state.lastOrder);
     }
     state.step = 'done';
