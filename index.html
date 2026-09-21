@@ -436,6 +436,7 @@ footer{background:var(--ink);color:var(--cream);padding:72px 0 0}
       </div>
       <div class="actions">
         <button class="icon-btn" onclick="toast('Search coming soon ✦','warn')" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+        <button class="icon-btn" onclick="openTrackModal()" aria-label="Track Order" title="Track Order"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></button>
         <button class="icon-btn" onclick="openWishlist()" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 000-7.8z"/></svg><span class="badge" id="wishBadge">0</span></button>
         <button class="icon-btn" onclick="openCart()" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="badge" id="cartBadge">0</span></button>
         <button class="icon-btn burger" onclick="toggleMobileNav()" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
@@ -574,7 +575,7 @@ footer{background:var(--ink);color:var(--cream);padding:72px 0 0}
         </div>
       </div>
       <div class="f-col"><h4>Shop</h4><a href="#shop" onclick="setFilter('men')">Men</a><a href="#shop" onclick="setFilter('women')">Women</a><a href="#shop" onclick="setFilter('outerwear')">Outerwear</a><a href="#shop" onclick="setFilter('accessories')">Accessories</a><a href="#shop" onclick="setFilter('sale')">Sale</a></div>
-      <div class="f-col"><h4>Help</h4><a href="#">Shipping Info</a><a href="#">7-Day Returns</a><a href="#">Size Guide</a><a href="#">Track Order</a><a href="#">Contact Us</a></div>
+      <div class="f-col"><h4>Help</h4><a href="#">Shipping Info</a><a href="#">7-Day Returns</a><a href="#">Size Guide</a><a href="#" onclick="openTrackModal(); return false;">Track Order</a><a href="#">Contact Us</a></div>
       <div class="f-col"><h4>Company</h4><a href="#story">Our Story</a><a href="#">Sustainability</a><a href="#">Careers</a><a href="#">Store Locator</a><a href="#">Press</a></div>
     </div>
     <div class="f-bottom">
@@ -629,19 +630,59 @@ footer{background:var(--ink);color:var(--cream);padding:72px 0 0}
   <div class="co-body" id="coBody"></div>
 </div>
 
+<div class="track-modal" id="trackModal">
+  <div class="track-card">
+    <button class="x-btn" onclick="closeTrackModal()" style="position:absolute;top:16px;right:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <div class="track-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+    <h2>Track Your Order</h2>
+    <p>Enter your Order ID to see live status & delivery date</p>
+    <div class="track-input-wrap">
+      <input type="text" id="trackOrderId" placeholder="e.g. VST-123456" onkeydown="if(event.key==='Enter')startTracking()">
+      <button onclick="startTracking()">Track</button>
+    </div>
+    <div id="trackResult"></div>
+    <p class="track-hint">Your Order ID was shown on the confirmation page after placing the order.</p>
+  </div>
+</div>
+
+<style>
+.track-modal{position:fixed;inset:0;background:rgba(20,18,16,.6);backdrop-filter:blur(6px);z-index:200;display:none;place-items:center;padding:24px;overflow-y:auto}
+.track-modal.on{display:grid}
+.track-card{background:var(--cream);border-radius:20px;padding:44px 34px 36px;width:100%;max-width:480px;box-shadow:0 40px 100px rgba(0,0,0,.35);position:relative;animation:tSlideUp .4s var(--ease)}
+@keyframes tSlideUp{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
+.track-ico{width:64px;height:64px;border-radius:50%;background:var(--ink);color:var(--gold);display:grid;place-items:center;margin:0 auto 20px}
+.track-ico svg{width:30px;height:30px;stroke-width:1.6}
+.track-card h2{font-family:'Playfair Display',serif;font-size:26px;text-align:center;margin-bottom:8px}
+.track-card > p{text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:26px;line-height:1.6}
+.track-input-wrap{display:flex;gap:8px;margin-bottom:20px}
+.track-input-wrap input{flex:1;padding:14px 18px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:14px;letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+.track-input-wrap input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(20,18,16,.06)}
+.track-input-wrap button{padding:14px 28px;border-radius:12px;background:var(--ink);color:var(--cream);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:background .25s}
+.track-input-wrap button:hover{background:var(--accent)}
+.track-hint{font-size:11.5px !important;color:var(--muted);text-align:center;margin-top:22px !important;margin-bottom:0 !important}
+.track-result-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:8px;animation:tRise .4s var(--ease)}
+@keyframes tRise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.track-result-card.err{background:#fdf6f3;border-color:#f2ddd3;text-align:center;color:var(--accent);font-size:13.5px;padding:20px}
+.track-row{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.track-row:last-child{border-bottom:none}
+.track-row span:first-child{color:var(--muted)}
+.track-row b{font-weight:600;text-align:right}
+.track-status-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.track-status-badge .dot{width:7px;height:7px;border-radius:50%}
+.track-status-badge.pending{background:#fff4e6;color:#b06a17}.track-status-badge.pending .dot{background:#e08c1e;animation:pulse 1.6s infinite}
+.track-status-badge.confirmed{background:#e8f3ed;color:var(--ok)}.track-status-badge.confirmed .dot{background:var(--ok)}
+.track-status-badge.rejected{background:#fdeaea;color:var(--danger)}.track-status-badge.rejected .dot{background:var(--danger)}
+.track-delivery-box{background:#e9f9ef;border:1.5px solid #b8e6ca;border-radius:12px;padding:18px 20px;margin-top:14px;display:flex;align-items:center;gap:14px}
+.track-delivery-box svg{width:26px;height:26px;stroke-width:1.6;color:#1a8c45;flex-shrink:0}
+.track-delivery-box .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#2f6b47;font-weight:600;margin-bottom:4px}
+.track-delivery-box .val{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#14713a}
+@media(max-width:480px){.track-card{padding:36px 24px 30px}.track-card h2{font-size:22px}.track-input-wrap{flex-direction:column}.track-input-wrap button{width:100%}}
+</style>
+
 <div class="toast-wrap" id="toastWrap"></div>
 
-<!-- ============ MAIN APP SCRIPT ============ -->
 <script>
 const WHATSAPP_NUMBER = '917564962304';
-const FB_CONFIG = {
-  apiKey: "AIzaSyBs5MWQMDkvrgP6UvWQ6wrN3C5Z1SNAEg",
-  authDomain: "vestra-clothing.firebaseapp.com",
-  projectId: "vestra-clothing",
-  storageBucket: "vestra-clothing.firebasestorage.app",
-  messagingSenderId: "853781252359",
-  appId: "1:853781252359:web:232ffb78003ed28e5e7daa2"
-};
 
 let PRODUCTS = [
   {id:1, name:'Oversized Linen Shirt', cat:'men', price:1899, old:2499, badge:'New', rating:4.8, reviews:124, img:'1521572163474-6864f9cf17ab', colors:['#e8e2d8','#1b1b1b','#8a9a7b'], desc:'Breathable European linen, cut relaxed through the body with a dropped shoulder. The one shirt that works over everything.'},
@@ -943,7 +984,8 @@ function renderCheckout(){
       <h2>Order Placed!</h2>
       <p>Thank you, <b>${c.firstName || 'friend'}</b>. Your order has been received and is currently <b>pending confirmation</b>.</p>
       <p style="font-size:13.5px;color:var(--muted)">A confirmation email is on its way to <b>${c.email || ''}</b>.</p>
-      <div class="order-box"><div><span>Order ID</span><b>${o.id || state.orderId || '—'}</b></div><div><span>Amount</span><b>${money(o.total || cartTotal())}</b></div><div><span>Status</span><b class="pending">Pending</b></div><div><span>Delivery By</span><b>${deliveryDate()}</b></div></div>
+      <div class="order-box"><div><span>Order ID</span><b>${o.id || state.orderId || '—'}</b></div><div><span>Amount</span><b>${money(o.total || cartTotal())}</b></div><div><span>Status</span><b class="pending">Pending</b></div></div>
+      <p style="font-size:13px;color:var(--muted);margin-top:14px">📌 Note your Order ID — you can track your order anytime using the <b>Track Order</b> button in the header.</p>
       <div class="wa-confirm">
         <div class="wa-ico"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></div>
         <h3>Confirm your order on <em>WhatsApp</em></h3>
@@ -1048,8 +1090,6 @@ function nextStep(){
 
 function prevStep(){ if(state.step > 1){ state.step--; renderCheckout(); $('coBody').scrollTop = 0; } }
 
-function deliveryDate(){ const d = new Date(); const days = state.shipping === 'priority' ? 1 : state.shipping === 'express' ? 3 : 6; d.setDate(d.getDate() + days); return d.toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}); }
-
 function placeOrder(){
   const btn = event.target.closest('button');
   if(btn){ btn.disabled = true; btn.textContent = 'Processing…'; }
@@ -1057,8 +1097,30 @@ function placeOrder(){
     const shipLabels = {standard:'Standard Delivery (5–7 days)', express:'Express Delivery (2–3 days)', priority:'Priority Delivery (Next day)'};
     const payLabels = {upi:'UPI'};
     state.orderId = 'VST-' + Math.floor(100000 + Math.random() * 900000);
-    state.lastOrder = {id:state.orderId,customer:JSON.parse(JSON.stringify(state.customer)),items:state.cart.map(i => ({...i})),total:cartTotal(),shippingLabel:shipLabels[state.shipping] || 'Standard Delivery',paymentLabel:payLabels[state.payment] || 'UPI',placedAt:new Date().toISOString()};
-    state.step = 'done'; renderCheckout(); $('coBody').scrollTop = 0;
+    state.lastOrder = {
+      id: state.orderId,
+      customer: JSON.parse(JSON.stringify(state.customer)),
+      items: state.cart.map(i => ({...i})),
+      total: cartTotal(),
+      subtotal: cartSubtotal(),
+      shipping_cost: shippingCost(),
+      discount: discountAmount(),
+      shippingLabel: shipLabels[state.shipping] || 'Standard Delivery',
+      paymentLabel: payLabels[state.payment] || 'UPI',
+      shipping: state.shipping,
+      payment: state.payment,
+      status: 'pending',
+      deliveryDate: null,
+      createdAt: new Date().toISOString(),
+      placedAt: new Date().toISOString()
+    };
+    // Save order to Firebase so admin panel can see it
+    if(window.__fb && window.__fbOrderSave){
+      window.__fbOrderSave(state.lastOrder);
+    }
+    state.step = 'done';
+    renderCheckout();
+    $('coBody').scrollTop = 0;
     toast('Order placed! Now confirm on WhatsApp 📲');
   }, 1400);
 }
@@ -1068,7 +1130,7 @@ function scrollTop(e){ e.preventDefault(); window.scrollTo({top:0, behavior:'smo
 
 window.addEventListener('scroll', () => { $('header').classList.toggle('scrolled', window.scrollY > 10); });
 (function(){ const track = $('annTrack'); if(track) track.innerHTML += track.innerHTML; })();
-document.addEventListener('keydown', e => { if(e.key === 'Escape'){ if($('checkout').classList.contains('open')) closeCheckout(); else if(document.querySelector('.drawer.open')) closeAll(); else if($('pdp').classList.contains('open')) closePDP(); else if($('mobileNav').classList.contains('open')) closeAll(); } });
+document.addEventListener('keydown', e => { if(e.key === 'Escape'){ if($('checkout').classList.contains('open')) closeCheckout(); else if(document.querySelector('.drawer.open')) closeAll(); else if($('pdp').classList.contains('open')) closePDP(); else if($('mobileNav').classList.contains('open')) closeAll(); else if($('trackModal').classList.contains('on')) closeTrackModal(); } });
 
 /* ===== Firebase real-time product sync ===== */
 window.updateProductsFromFirebase = function(newProducts){
@@ -1082,10 +1144,9 @@ window.updateProductsFromFirebase = function(newProducts){
 (function init(){ load(); renderProducts(); renderCart(); renderWishlist(); updateBadges(); renderCoSteps(); })();
 </script>
 
-<!-- ============ FIREBASE MODULE SCRIPT ============ -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
-import { getFirestore, doc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import { getFirestore, doc, setDoc, onSnapshot, getDoc } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBs5MWQMDkvrgP6UvWQ6wrN3C5Z1SNAEg",
@@ -1099,6 +1160,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+/* Real-time product listener */
 onSnapshot(doc(db, 'store', 'products'), (snap) => {
   if(snap.exists() && snap.data().list){
     const newProducts = snap.data().list;
@@ -1106,9 +1168,111 @@ onSnapshot(doc(db, 'store', 'products'), (snap) => {
       window.updateProductsFromFirebase(newProducts);
     }
   }
-}, (err) => {
-  console.warn('Firebase products listener error:', err.message);
-});
+}, (err) => { console.warn('Products listener error:', err.message); });
+
+/* Save order to Firebase */
+window.__fbOrderSave = async function(order){
+  try {
+    const ordersRef = doc(db, 'store', 'orders');
+    const snap = await getDoc(ordersRef);
+    let list = snap.exists() && snap.data().list ? snap.data().list : [];
+    list.push(order);
+    await setDoc(ordersRef, { list, updatedAt: new Date().toISOString() });
+    console.log('✓ Order saved to Firebase:', order.id);
+  } catch(e) {
+    console.error('Order save error:', e);
+  }
+};
+
+/* ===== TRACK ORDER ===== */
+let trackUnsub = null;
+
+window.openTrackModal = function(){
+  document.getElementById('trackModal').classList.add('on');
+  document.body.classList.add('lock');
+  setTimeout(() => document.getElementById('trackOrderId')?.focus(), 300);
+};
+
+window.closeTrackModal = function(){
+  document.getElementById('trackModal').classList.remove('on');
+  if(!document.querySelector('.drawer.open') && !document.getElementById('pdp').classList.contains('open') && !document.getElementById('checkout').classList.contains('open')){
+    document.body.classList.remove('lock');
+  }
+  if(trackUnsub){ trackUnsub(); trackUnsub = null; }
+  const res = document.getElementById('trackResult');
+  if(res) res.innerHTML = '';
+  const inp = document.getElementById('trackOrderId');
+  if(inp) inp.value = '';
+};
+
+window.startTracking = function(){
+  const id = (document.getElementById('trackOrderId').value || '').trim().toUpperCase();
+  const result = document.getElementById('trackResult');
+  if(!id){ result.innerHTML = `<div class="track-result-card err">Please enter an Order ID</div>`; return; }
+  if(!id.startsWith('VST-')){ result.innerHTML = `<div class="track-result-card err">Invalid Order ID. It should look like VST-123456</div>`; return; }
+
+  if(trackUnsub){ trackUnsub(); trackUnsub = null; }
+  result.innerHTML = `<div class="track-result-card" style="text-align:center;color:var(--muted);font-size:13px">Looking up your order…</div>`;
+
+  trackUnsub = onSnapshot(doc(db, 'store', 'orders'), (snap) => {
+    const list = snap.exists() && snap.data().list ? snap.data().list : [];
+    const o = list.find(x => x.id === id);
+    renderTrackResult(o, id);
+  }, (err) => {
+    result.innerHTML = `<div class="track-result-card err">Connection error. Please try again.</div>`;
+  });
+};
+
+function renderTrackResult(o, id){
+  const result = document.getElementById('trackResult');
+  if(!o){
+    result.innerHTML = `<div class="track-result-card err">No order found with ID <b>${id}</b>.<br><small style="opacity:.7">Check the ID and try again.</small></div>`;
+    return;
+  }
+
+  const statusLabel = {pending:'Pending Confirmation', confirmed:'Confirmed', rejected:'Rejected'}[o.status] || o.status;
+  const statusClass = o.status;
+
+  let deliveryHTML = '';
+  if(o.status === 'confirmed' && o.deliveryDate){
+    const d = new Date(o.deliveryDate + 'T00:00:00');
+    const formatted = d.toLocaleDateString('en-IN', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+    deliveryHTML = `
+      <div class="track-delivery-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <div>
+          <div class="lbl">Estimated Delivery</div>
+          <div class="val">${formatted}</div>
+        </div>
+      </div>`;
+  } else if(o.status === 'confirmed'){
+    deliveryHTML = `<div class="track-result-card" style="margin-top:14px;text-align:center;color:var(--muted);font-size:13px;padding:16px">Delivery date will be updated soon.</div>`;
+  } else if(o.status === 'pending'){
+    deliveryHTML = `<div class="track-result-card" style="margin-top:14px;text-align:center;color:#b06a17;font-size:13px;padding:16px;background:#fff4e6;border-color:#f2d9b8">Order is pending confirmation. Delivery date will appear here once confirmed.</div>`;
+  } else if(o.status === 'rejected'){
+    deliveryHTML = `<div class="track-result-card" style="margin-top:14px;text-align:center;color:var(--danger);font-size:13px;padding:16px;background:#fdeaea;border-color:#f5c7c7">This order was rejected. Contact support for more info.</div>`;
+  }
+
+  const itemCount = (o.items || []).reduce((s,i) => s + (i.qty || 0), 0);
+
+  result.innerHTML = `
+    <div class="track-result-card">
+      <div class="track-row"><span>Order ID</span><b>${o.id}</b></div>
+      <div class="track-row"><span>Status</span><span class="track-status-badge ${statusClass}"><span class="dot"></span>${statusLabel}</span></div>
+      <div class="track-row"><span>Items</span><b>${itemCount} item${itemCount !== 1 ? 's' : ''}</b></div>
+      <div class="track-row"><span>Order Total</span><b>${'₹' + Number(o.total || 0).toLocaleString('en-IN')}</b></div>
+      <div class="track-row"><span>Placed On</span><b>${new Date(o.createdAt).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'})}</b></div>
+    </div>
+    ${deliveryHTML}
+  `;
+}
+
+const trackModalEl = document.getElementById('trackModal');
+if(trackModalEl){
+  trackModalEl.addEventListener('click', (e) => {
+    if(e.target === trackModalEl) window.closeTrackModal();
+  });
+}
 </script>
 </body>
   </html>
