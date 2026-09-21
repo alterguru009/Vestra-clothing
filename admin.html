@@ -318,6 +318,10 @@ tbody tr:hover{background:var(--cream-2)}
           <div class="fld"><label>Old Price (₹)</label><input type="number" id="pOld" min="0" placeholder="2499"></div>
           <div class="fld"><label>Stock Quantity</label><input type="number" id="pStock" min="0" value="50"></div>
           <div class="fld"><label>Rating (0–5)</label><input type="number" id="pRating" min="0" max="5" step="0.1" value="4.8"></div>
+          <div class="fld">
+  <label>Reviews Count</label>
+  <input type="number" id="pReviews" min="0" placeholder="0" value="0">
+          </div>
           <div class="fld full">
             <label>Product Image *</label>
             <div class="img-tabs">
@@ -754,6 +758,7 @@ function openProductModal(id){
     $('pOld').value=p.old||'';
     $('pStock').value=p.stock??50;
     $('pRating').value=p.rating||4.8;
+    $('pReviews').value=p.reviews||0;
     $('pDesc').value=p.desc||'';
     if((p.img||'').startsWith('data:')){
       $('pImgData').value=p.img;
@@ -770,6 +775,7 @@ function openProductModal(id){
     $('pId').value='';
     $('pStock').value=50;
     $('pRating').value=4.8;
+    $('pReviews').value=0;
     $('imgPreview').innerHTML='Image preview';
     const ci=$('colorInputs');ci.innerHTML='';
     ['#e8e2d8','#1b1b1b','#8a9a7b'].forEach(c=>addColorInput(c));
@@ -798,7 +804,7 @@ async function saveProduct(e){
     old:$('pOld').value?Number($('pOld').value):null,
     stock:Number($('pStock').value)||0,
     rating:Number($('pRating').value)||4.8,
-    reviews:id?(state.products.find(p=>p.id==id)?.reviews||0):0,
+    reviews:Number($('pReviews').value)||0,
     img:$('pImgData').value||$('pImg').value.trim(),
     colors:colors,
     desc:$('pDesc').value.trim()
