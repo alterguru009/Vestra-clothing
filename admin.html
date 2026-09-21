@@ -163,6 +163,14 @@ tbody tr:hover{background:var(--cream-2)}
 .order-total.grand span:last-child{font-family:'Playfair Display',serif;font-size:24px}
 .notes-area{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:13px;font-family:inherit;resize:vertical;min-height:70px}
 .notes-area:focus{outline:none;border-color:var(--ink)}
+.delivery-picker{width:100%;padding:14px 16px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:14px;font-family:inherit;transition:all .25s var(--ease);font-weight:600}
+.delivery-picker:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(20,18,16,.06)}
+.delivery-hint{font-size:11.5px;color:var(--muted);margin-top:10px;display:flex;align-items:center;gap:7px;line-height:1.5}
+.delivery-hint svg{width:14px;height:14px;stroke-width:1.8;flex-shrink:0}
+.delivery-hint.ok{color:var(--ok)}
+.delivery-hint.ok svg{color:var(--ok)}
+.delivery-hint.wait{color:#b06a17}
+.delivery-hint.wait svg{color:#e08c1e}
 .empty{text-align:center;padding:60px 20px;color:var(--muted)}
 .empty svg{width:52px;height:52px;stroke-width:1.2;color:var(--line);margin:0 auto 16px}
 .empty b{display:block;font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);margin-bottom:6px}
@@ -408,7 +416,6 @@ function fmtDate(iso){return new Date(iso).toLocaleString('en-IN',{day:'numeric'
 
 function showSync(on){$('syncStatus').classList.toggle('on',on);}
 
-/* ===== FIREBASE STORAGE ===== */
 async function saveProducts(){
   if(!fbReady){toast('Firebase not ready','err');return;}
   showSync(true);
@@ -417,8 +424,7 @@ async function saveProducts(){
     await setDoc(doc(db,'store','products'),{list:state.products,updatedAt:new Date().toISOString()});
     toast('Products synced to cloud ✓');
   }catch(e){console.error(e);toast('Sync error: '+e.message,'err');}
-  showSync(false);
-  updateSidebarCounts();
+  showSync(false);updateSidebarCounts();
 }
 async function saveOrders(){
   if(!fbReady)return;
@@ -427,8 +433,7 @@ async function saveOrders(){
     const {db,doc,setDoc}=window.__fb;
     await setDoc(doc(db,'store','orders'),{list:state.orders,updatedAt:new Date().toISOString()});
   }catch(e){console.error(e);toast('Orders sync error','err');}
-  showSync(false);
-  updateSidebarCounts();
+  showSync(false);updateSidebarCounts();
 }
 async function saveSettings(){
   if(!fbReady)return;
@@ -441,35 +446,16 @@ async function saveSettings(){
 
 function startFirebaseListeners(){
   const {db,doc,onSnapshot}=window.__fb;
-
-  // Settings listener
-  onSnapshot(doc(db,'store','settings'),(snap)=>{
-    if(snap.exists())state.settings={...state.settings,...snap.data()};
-    renderSettings();
-  },(err)=>{console.error('Settings listener:',err);});
-
-  // Products listener (realtime)
+  onSnapshot(doc(db,'store','settings'),(snap)=>{if(snap.exists())state.settings={...state.settings,...snap.data()};renderSettings();},(err)=>{console.error('Settings listener:',err);});
   onSnapshot(doc(db,'store','products'),(snap)=>{
-    if(snap.exists()&&snap.data().list){
-      state.products=snap.data().list;
-    }else{
-      // Seed with defaults on first run
-      state.products=JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-      saveProducts();
-    }
-    updateSidebarCounts();
-    renderProducts();
-    renderDashboard();
+    if(snap.exists()&&snap.data().list){state.products=snap.data().list;}
+    else{state.products=JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));saveProducts();}
+    updateSidebarCounts();renderProducts();renderDashboard();
   },(err)=>{console.error('Products listener:',err);toast('Products sync error','err');});
-
-  // Orders listener (realtime)
   onSnapshot(doc(db,'store','orders'),(snap)=>{
     state.orders=snap.exists()&&snap.data().list?snap.data().list:[];
-    updateSidebarCounts();
-    renderOrders();
-    renderDashboard();
+    updateSidebarCounts();renderOrders();renderDashboard();
   },(err)=>{console.error('Orders listener:',err);});
-
   console.log('✓ Firebase listeners active');
 }
 
@@ -543,7 +529,15 @@ function renderDashboard(){
   if(!recent.length){
     $('recentOrders').innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg><b>No orders yet</b><p>Orders will appear here once customers place them.</p></div>`;
   }else{
-    $('recentOrders').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Time</th><th></th></tr></thead><tbody>${recent.map(o=>`<tr><td><b>${escapeHtml(o.id)}</b></td><td>${escapeHtml((o.customer?.firstName||'')+' '+(o.customer?.lastName||''))||'—'}</td><td><b>${money(o.total)}</b></td><td><span class="badge ${o.status}"><span class="dot"></span>${o.status}</span></td><td style="color:var(--muted);font-size:12.5px">${timeAgo(o.createdAt)}</td><td><button class="btn btn-ghost btn-sm" onclick="viewOrder('${o.id}')">View</button></td></tr>`).join('')}</tbody></table></div>`;
+    $('recentOrders').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Delivery</th><th>Status</th><th>Time</th><th></th></tr></thead><tbody>${recent.map(o=>{
+      let del = '—';
+      if(o.status === 'confirmed' && o.deliveryDate){
+        del = new Date(o.deliveryDate).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+      } else if(o.status === 'confirmed'){
+        del = '<span style="color:var(--warn);font-size:11.5px">Not set</span>';
+      }
+      return `<tr><td><b>${escapeHtml(o.id)}</b></td><td>${escapeHtml((o.customer?.firstName||'')+' '+(o.customer?.lastName||''))||'—'}</td><td><b>${money(o.total)}</b></td><td style="font-size:12.5px">${del}</td><td><span class="badge ${o.status}"><span class="dot"></span>${o.status}</span></td><td style="color:var(--muted);font-size:12.5px">${timeAgo(o.createdAt)}</td><td><button class="btn btn-ghost btn-sm" onclick="viewOrder('${o.id}')">View</button></td></tr>`;
+    }).join('')}</tbody></table></div>`;
   }
 
   const low=state.products.filter(p=>(p.stock??0)<10).sort((a,b)=>(a.stock||0)-(b.stock||0));
@@ -571,7 +565,17 @@ function renderOrders(){
     return;
   }
 
-  $('ordersTable').innerHTML=`<div class="table-wrap" style="border:none;border-radius:0"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th style="text-align:right">Actions</th></tr></thead><tbody>${list.map(o=>{const items=o.items||[];const itemCount=items.reduce((s,i)=>s+(i.qty||0),0);return `<tr><td><b>${escapeHtml(o.id)}</b></td><td><b style="display:block;font-size:13.5px">${escapeHtml((o.customer?.firstName||'')+' '+(o.customer?.lastName||''))||'—'}</b><span style="font-size:11.5px;color:var(--muted)">${escapeHtml(o.customer?.phone||'')}</span></td><td><b>${itemCount}</b> item${itemCount!==1?'s':''}</td><td><b>${money(o.total)}</b></td><td><span class="badge ${o.status}"><span class="dot"></span>${o.status}</span></td><td style="color:var(--muted);font-size:12.5px">${timeAgo(o.createdAt)}</td><td><div class="row-actions">${o.status==='pending'?`<button class="icon-act ok" title="Confirm" onclick="changeStatus('${o.id}','confirmed')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5"/></svg></button><button class="icon-act del" title="Reject" onclick="changeStatus('${o.id}','rejected')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`:''}<button class="icon-act" title="View" onclick="viewOrder('${o.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon-act del" title="Delete" onclick="deleteOrder('${o.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button></div></td></tr>`;}).join('')}</tbody></table></div>`;
+  $('ordersTable').innerHTML=`<div class="table-wrap" style="border:none;border-radius:0"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Delivery</th><th>Status</th><th>Date</th><th style="text-align:right">Actions</th></tr></thead><tbody>${list.map(o=>{
+    const items=o.items||[];
+    const itemCount=items.reduce((s,i)=>s+(i.qty||0),0);
+    let del = '<span style="color:var(--muted);font-size:11.5px">—</span>';
+    if(o.status === 'confirmed' && o.deliveryDate){
+      del = `<b style="font-size:12.5px">${new Date(o.deliveryDate).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'2-digit'})}</b>`;
+    } else if(o.status === 'confirmed'){
+      del = '<span style="color:var(--warn);font-size:11.5px;font-weight:600">Set date</span>';
+    }
+    return `<tr><td><b>${escapeHtml(o.id)}</b></td><td><b style="display:block;font-size:13.5px">${escapeHtml((o.customer?.firstName||'')+' '+(o.customer?.lastName||''))||'—'}</b><span style="font-size:11.5px;color:var(--muted)">${escapeHtml(o.customer?.phone||'')}</span></td><td><b>${itemCount}</b> item${itemCount!==1?'s':''}</td><td><b>${money(o.total)}</b></td><td>${del}</td><td><span class="badge ${o.status}"><span class="dot"></span>${o.status}</span></td><td style="color:var(--muted);font-size:12.5px">${timeAgo(o.createdAt)}</td><td><div class="row-actions">${o.status==='pending'?`<button class="icon-act ok" title="Confirm" onclick="changeStatus('${o.id}','confirmed')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5"/></svg></button><button class="icon-act del" title="Reject" onclick="changeStatus('${o.id}','rejected')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`:''}<button class="icon-act" title="View" onclick="viewOrder('${o.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon-act del" title="Delete" onclick="deleteOrder('${o.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button></div></td></tr>`;
+  }).join('')}</tbody></table></div>`;
 }
 
 async function changeStatus(id,status){
@@ -586,6 +590,10 @@ async function changeStatus(id,status){
     renderOrders();renderDashboard();
     toast(`Order ${id} ${status}`);
     closeModal('orderModal');closeModal('confirmModal');
+    // Reopen modal to show date picker
+    if(status === 'confirmed'){
+      setTimeout(() => viewOrder(id), 300);
+    }
   });
 }
 
@@ -605,13 +613,37 @@ function viewOrder(id){
   $('oModalSub').textContent=fmtDate(o.createdAt);
   const c=o.customer||{};
   const items=o.items||[];
+  const today = new Date().toISOString().slice(0,10);
+
   $('orderModalBody').innerHTML=`
     <div class="order-section"><h4>Status</h4><span class="badge ${o.status}" style="font-size:11.5px;padding:7px 16px"><span class="dot"></span>${o.status}</span></div>
+
+    <div class="order-section">
+      <h4>Delivery Date</h4>
+      ${o.status === 'confirmed' ? `
+        <input type="date" class="delivery-picker" id="orderDeliveryDate" value="${o.deliveryDate || ''}" min="${today}" onchange="saveDeliveryDate('${o.id}')">
+        <p class="delivery-hint ${o.deliveryDate ? 'ok' : 'wait'}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+          ${o.deliveryDate
+            ? 'Customer can see this date on the website now'
+            : 'Set a date — customer will see it immediately on the website'}
+        </p>
+      ` : o.status === 'pending' ? `
+        <p style="color:var(--muted);font-size:13px;display:flex;align-items:center;gap:8px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;stroke-width:1.8;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+          Confirm the order first, then you can set a delivery date.
+        </p>
+      ` : `
+        <p style="color:var(--muted);font-size:13px">Order was ${o.status}. No delivery date.</p>
+      `}
+    </div>
+
     <div class="order-section"><h4>Customer</h4><p><b>${escapeHtml((c.firstName||'')+' '+(c.lastName||''))}</b><br>📞 ${escapeHtml(c.phone||'—')}<br>📧 ${escapeHtml(c.email||'—')}</p></div>
     <div class="order-section"><h4>Delivery Address</h4><p>${escapeHtml(c.address||'—')}<br>${escapeHtml(c.city||'')}${c.city?', ':''}${escapeHtml(c.state||'')} ${c.pincode?'— '+escapeHtml(c.pincode):''}<br>${escapeHtml(c.country||'India')}</p></div>
     <div class="order-section"><h4>Items (${items.length})</h4><div class="order-items">${items.map(i=>{const p=state.products.find(x=>x.id===i.id);if(!p)return `<div class="oi"><div class="oi-info"><b>Product #${i.id}</b><span>Size ${i.size} × ${i.qty}</span></div></div>`;return `<div class="oi"><div class="oi-img"><img src="${imgUrl(p.img,200)}" alt="" onerror="this.style.display='none'"></div><div class="oi-info"><b>${escapeHtml(p.name)}</b><span>Size ${i.size} × ${i.qty}</span></div><div class="oi-price">${money(p.price*i.qty)}</div></div>`;}).join('')}</div></div>
     <div class="order-section"><h4>Payment & Shipping</h4><div class="order-total"><span style="color:var(--muted)">Subtotal</span><span>${money(o.subtotal||o.total)}</span></div>${o.shipping_cost?`<div class="order-total"><span style="color:var(--muted)">Shipping</span><span>${money(o.shipping_cost)}</span></div>`:''}${o.discount?`<div class="order-total"><span style="color:var(--muted)">Discount</span><span style="color:var(--ok)">− ${money(o.discount)}</span></div>`:''}<div class="order-total grand"><span>Total</span><span>${money(o.total)}</span></div><p style="margin-top:14px;font-size:12.5px;color:var(--muted)"><b>Method:</b> ${escapeHtml(o.payment||'UPI')} · <b>Shipping:</b> ${escapeHtml(o.shipping||'standard')}</p></div>
     <div class="order-section"><h4>Internal Notes</h4><textarea class="notes-area" id="orderNotes" placeholder="Add notes..." onblur="saveOrderNotes('${o.id}')">${escapeHtml(o.notes||'')}</textarea></div>`;
+
   const foot=$('orderModalFoot');
   let html='';
   if(o.status==='pending')html=`<button class="btn btn-ghost" onclick="closeModal('orderModal')">Close</button><button class="btn btn-danger" onclick="changeStatus('${o.id}','rejected')">Reject</button><button class="btn btn-ok" onclick="changeStatus('${o.id}','confirmed')">Confirm</button>`;
@@ -621,14 +653,42 @@ function viewOrder(id){
   openModal('orderModal');
 }
 
+async function saveDeliveryDate(orderId){
+  const o = state.orders.find(x => x.id === orderId);
+  if(!o) return;
+  const input = $('orderDeliveryDate');
+  if(!input) return;
+  const newDate = input.value || null;
+  o.deliveryDate = newDate;
+  o.deliveryDateSetAt = new Date().toISOString();
+  await saveOrders();
+  if(newDate){
+    const formatted = new Date(newDate).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+    toast(`Delivery date set to ${formatted} ✓`);
+  } else {
+    toast('Delivery date removed');
+  }
+  renderOrders();renderDashboard();
+  // Refresh modal to update hint
+  const hint = document.querySelector('.delivery-hint');
+  if(hint){
+    hint.className = 'delivery-hint ' + (newDate ? 'ok' : 'wait');
+    hint.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>${newDate ? 'Customer can see this date on the website now' : 'Set a date — customer will see it immediately on the website'}`;
+  }
+}
+
 async function saveOrderNotes(id){const o=state.orders.find(x=>x.id===id);if(!o)return;const notes=$('orderNotes')?.value||'';if(o.notes!==notes){o.notes=notes;await saveOrders();}}
 
 function printInvoice(id){
   const o=state.orders.find(x=>x.id===id);
   if(!o)return;
   const c=o.customer||{};
+  let deliveryLine = '';
+  if(o.status === 'confirmed' && o.deliveryDate){
+    deliveryLine = `<br><b>Delivery Date:</b> ${new Date(o.deliveryDate).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}`;
+  }
   const w=window.open('','_blank','width=800,height=900');
-  w.document.write(`<html><head><title>Invoice ${o.id}</title><style>body{font-family:Arial,sans-serif;padding:40px;color:#141210;max-width:640px;margin:0 auto}h1{font-family:Georgia,serif;letter-spacing:.2em;font-size:24px;margin-bottom:4px}.sub{font-size:10px;letter-spacing:.3em;color:#7d746a;text-transform:uppercase;margin-bottom:30px}.head{display:flex;justify-content:space-between;border-bottom:2px solid #141210;padding-bottom:20px;margin-bottom:24px}.head div{font-size:12px;line-height:1.7}h3{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#7d746a;margin:24px 0 10px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;padding:8px 0;border-bottom:1px solid #e6ded3;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#7d746a}td{padding:10px 0;border-bottom:1px solid #f0e9de}.tot{text-align:right;font-size:18px;font-weight:bold;margin-top:20px}.foot{margin-top:40px;padding-top:20px;border-top:1px solid #e6ded3;font-size:11px;color:#7d746a;text-align:center}</style></head><body><h1>VESTRA</h1><div class="sub">Wear Your Story</div><div class="head"><div><b>Order:</b> ${o.id}<br><b>Date:</b> ${fmtDate(o.createdAt)}<br><b>Status:</b> ${o.status.toUpperCase()}</div><div style="text-align:right"><b>${escapeHtml((c.firstName||'')+' '+(c.lastName||''))}</b><br>${escapeHtml(c.phone||'')}<br>${escapeHtml(c.email||'')}<br>${escapeHtml(c.address||'')}<br>${escapeHtml(c.city||'')}, ${escapeHtml(c.state||'')} ${escapeHtml(c.pincode||'')}</div></div><h3>Items</h3><table><thead><tr><th>Item</th><th>Size</th><th style="text-align:center">Qty</th><th style="text-align:right">Price</th></tr></thead><tbody>${(o.items||[]).map(i=>{const p=state.products.find(x=>x.id===i.id);return `<tr><td>${escapeHtml(p?p.name:'Product')}</td><td>${i.size}</td><td style="text-align:center">${i.qty}</td><td style="text-align:right">${money((p?p.price:0)*i.qty)}</td></tr>`;}).join('')}</tbody></table><div class="tot">Total: ${money(o.total)}</div><div class="foot">Thank you for shopping with VESTRA ✦ 7-day returns available</div></body></html>`);
+  w.document.write(`<html><head><title>Invoice ${o.id}</title><style>body{font-family:Arial,sans-serif;padding:40px;color:#141210;max-width:640px;margin:0 auto}h1{font-family:Georgia,serif;letter-spacing:.2em;font-size:24px;margin-bottom:4px}.sub{font-size:10px;letter-spacing:.3em;color:#7d746a;text-transform:uppercase;margin-bottom:30px}.head{display:flex;justify-content:space-between;border-bottom:2px solid #141210;padding-bottom:20px;margin-bottom:24px}.head div{font-size:12px;line-height:1.7}h3{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#7d746a;margin:24px 0 10px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;padding:8px 0;border-bottom:1px solid #e6ded3;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#7d746a}td{padding:10px 0;border-bottom:1px solid #f0e9de}.tot{text-align:right;font-size:18px;font-weight:bold;margin-top:20px}.foot{margin-top:40px;padding-top:20px;border-top:1px solid #e6ded3;font-size:11px;color:#7d746a;text-align:center}</style></head><body><h1>VESTRA</h1><div class="sub">Wear Your Story</div><div class="head"><div><b>Order:</b> ${o.id}<br><b>Date:</b> ${fmtDate(o.createdAt)}<br><b>Status:</b> ${o.status.toUpperCase()}${deliveryLine}</div><div style="text-align:right"><b>${escapeHtml((c.firstName||'')+' '+(c.lastName||''))}</b><br>${escapeHtml(c.phone||'')}<br>${escapeHtml(c.email||'')}<br>${escapeHtml(c.address||'')}<br>${escapeHtml(c.city||'')}, ${escapeHtml(c.state||'')} ${escapeHtml(c.pincode||'')}</div></div><h3>Items</h3><table><thead><tr><th>Item</th><th>Size</th><th style="text-align:center">Qty</th><th style="text-align:right">Price</th></tr></thead><tbody>${(o.items||[]).map(i=>{const p=state.products.find(x=>x.id===i.id);return `<tr><td>${escapeHtml(p?p.name:'Product')}</td><td>${i.size}</td><td style="text-align:center">${i.qty}</td><td style="text-align:right">${money((p?p.price:0)*i.qty)}</td></tr>`;}).join('')}</tbody></table><div class="tot">Total: ${money(o.total)}</div><div class="foot">Thank you for shopping with VESTRA ✦ 7-day returns available</div></body></html>`);
   w.document.close();
   setTimeout(()=>w.print(),400);
 }
@@ -839,7 +899,6 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelec
 
 function renderAll(){updateSidebarCounts();renderDashboard();renderOrders();renderProducts();renderSettings();}
 
-/* Wait for Firebase to be ready, then start listeners */
 function startApp(){
   fbReady=true;
   startFirebaseListeners();
@@ -850,7 +909,6 @@ function startApp(){
 if(window.__fbReady){startApp();}
 else document.addEventListener('firebase-ready',startApp);
 
-// Expose functions globally (since script is not module)
 window.doLogin=doLogin;window.logout=logout;window.switchView=switchView;
 window.openProductModal=openProductModal;window.closeModal=closeModal;
 window.saveProduct=saveProduct;window.deleteProduct=deleteProduct;window.resetProducts=resetProducts;
@@ -860,6 +918,7 @@ window.switchImgTab=switchImgTab;window.handleImageUpload=handleImageUpload;wind
 window.addColorInput=addColorInput;window.saveWhatsapp=saveWhatsapp;window.savePassword=savePassword;
 window.saveStoreName=saveStoreName;window.exportData=exportData;window.importData=importData;
 window.clearOrders=clearOrders;window.renderOrders=renderOrders;window.renderProducts=renderProducts;
+window.saveDeliveryDate=saveDeliveryDate;
 </script>
 </body>
   </html>
