@@ -9,13 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--ink:#141210;--ink-2:#2a2622;--cream:#faf7f2;--cream-2:#f3ede4;--accent:#c0562f;--accent-d:#a3451f;--gold:#c9a227;--muted:#7d746a;--line:#e6ded3;--ok:#2f7d5c;--warn:#d97706;--danger:#dc2626;--radius:14px;--ease:cubic-bezier(.4,0,.2,1)}
+:root{--ink:#141210;--cream:#faf7f2;--cream-2:#f3ede4;--accent:#c0562f;--gold:#c9a227;--muted:#7d746a;--line:#e6ded3;--ok:#2f7d5c;--warn:#d97706;--danger:#dc2626;--radius:14px;--ease:cubic-bezier(.4,0,.2,1)}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--cream-2);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;letter-spacing:-.01em}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
 img{max-width:100%;display:block}
-
 .login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#141210 0%,#2a2622 100%);display:grid;place-items:center;padding:24px;z-index:100}
 .login-card{background:var(--cream);border-radius:20px;padding:52px 44px;width:100%;max-width:420px;box-shadow:0 40px 100px rgba(0,0,0,.4)}
 .login-logo{text-align:center;margin-bottom:36px}
@@ -26,16 +25,14 @@ img{max-width:100%;display:block}
 .login-card > p{text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:30px}
 .login-field{margin-bottom:16px}
 .login-field label{display:block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.login-field input{width:100%;padding:15px 20px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:15px;transition:border-color .25s}
+.login-field input{width:100%;padding:15px 20px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:15px}
 .login-field input:focus{outline:none;border-color:var(--ink)}
 .login-btn{width:100%;padding:16px;border-radius:12px;background:var(--ink);color:var(--cream);font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-top:10px;transition:all .3s var(--ease)}
 .login-btn:hover{background:var(--accent);transform:translateY(-2px)}
 .login-err{color:var(--danger);font-size:12.5px;text-align:center;margin-top:14px;display:none}
 .login-hint{text-align:center;font-size:11.5px;color:var(--muted);margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .login-hint code{background:var(--cream-2);padding:2px 8px;border-radius:6px;font-size:11px;color:var(--ink);font-weight:600}
-
-.app{display:none;min-height:100vh}
-.app.on{display:block}
+.app{display:none;min-height:100vh}.app.on{display:block}
 .sidebar{position:fixed;top:0;left:0;bottom:0;width:250px;background:var(--ink);color:var(--cream);padding:28px 0;display:flex;flex-direction:column;z-index:50}
 .sb-logo{padding:0 26px 26px;border-bottom:1px solid rgba(250,247,242,.1);margin-bottom:20px}
 .sb-logo b{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:.2em;display:block;color:var(--cream)}
@@ -44,7 +41,7 @@ img{max-width:100%;display:block}
 .sb-link{display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:11px;font-size:13.5px;font-weight:500;color:rgba(250,247,242,.7);transition:all .25s var(--ease);cursor:pointer}
 .sb-link svg{width:18px;height:18px;stroke-width:1.7;flex-shrink:0}
 .sb-link:hover{background:rgba(250,247,242,.06);color:var(--cream)}
-.sb-link.active{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(192,86,47,.35)}
+.sb-link.active{background:var(--accent);color:#fff}
 .sb-link .count{margin-left:auto;background:rgba(250,247,242,.15);color:var(--cream);font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:100px}
 .sb-link.active .count{background:rgba(255,255,255,.28)}
 .sb-foot{padding:16px 20px 0;border-top:1px solid rgba(250,247,242,.1);margin-top:14px}
@@ -52,12 +49,11 @@ img{max-width:100%;display:block}
 .sb-av{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;font-weight:700;font-size:13px;font-family:'Playfair Display',serif}
 .sb-user b{font-size:13px;display:block;color:var(--cream)}
 .sb-user span{font-size:10.5px;color:rgba(250,247,242,.5)}
-.sb-logout{width:100%;padding:10px;border-radius:9px;border:1px solid rgba(250,247,242,.18);color:rgba(250,247,242,.8);font-size:12px;font-weight:500;transition:all .25s}
+.sb-logout{width:100%;padding:10px;border-radius:9px;border:1px solid rgba(250,247,242,.18);color:rgba(250,247,242,.8);font-size:12px;transition:all .25s}
 .sb-logout:hover{background:var(--danger);border-color:var(--danger);color:#fff}
-
-.main{margin-left:250px;min-height:100vh;padding:0}
+.main{margin-left:250px;min-height:100vh}
 .topbar{background:var(--cream);border-bottom:1px solid var(--line);padding:22px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:40}
-.topbar h1{font-size:26px;letter-spacing:-.01em}
+.topbar h1{font-size:26px}
 .topbar .sub{font-size:12.5px;color:var(--muted);margin-top:3px}
 .topbar-actions{display:flex;gap:10px;align-items:center}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 22px;border-radius:100px;font-size:12.5px;font-weight:600;letter-spacing:.05em;transition:all .25s var(--ease);border:1.5px solid transparent}
@@ -66,62 +62,41 @@ img{max-width:100%;display:block}
 .btn-solid:hover{background:var(--accent);transform:translateY(-2px)}
 .btn-ghost{border-color:var(--line);color:var(--ink);background:var(--cream)}
 .btn-ghost:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-danger:hover{background:#b91c1c}
-.btn-ok{background:var(--ok);color:#fff}
-.btn-ok:hover{background:#256349}
+.btn-danger{background:var(--danger);color:#fff}.btn-danger:hover{background:#b91c1c}
+.btn-ok{background:var(--ok);color:#fff}.btn-ok:hover{background:#256349}
 .btn-sm{padding:8px 16px;font-size:11.5px}
-.btn-block{width:100%}
-
 .content{padding:32px 40px 80px;max-width:1400px}
-.view{display:none}
-.view.on{display:block}
-
+.view{display:none}.view.on{display:block}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:32px}
 .stat{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;transition:all .3s var(--ease)}
 .stat:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(20,18,16,.08)}
 .stat-ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px}
 .stat-ico svg{width:20px;height:20px;stroke-width:1.8}
-.stat-ico.blue{background:#e8eef7;color:#3a5a8a}
-.stat-ico.gold{background:#fdf6e3;color:#b8860b}
-.stat-ico.green{background:#e8f3ed;color:var(--ok)}
-.stat-ico.red{background:#fdeaea;color:var(--danger)}
-.stat-ico.purple{background:#f0e8f7;color:#7c3a9a}
-.stat-ico.orange{background:#fdf0e3;color:#c0562f}
+.stat-ico.blue{background:#e8eef7;color:#3a5a8a}.stat-ico.gold{background:#fdf6e3;color:#b8860b}.stat-ico.green{background:#e8f3ed;color:var(--ok)}.stat-ico.red{background:#fdeaea;color:var(--danger)}.stat-ico.purple{background:#f0e8f7;color:#7c3a9a}.stat-ico.orange{background:#fdf0e3;color:#c0562f}
 .stat-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
-.stat-value{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.stat-value{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;line-height:1}
 .stat-sub{font-size:11.5px;color:var(--muted);margin-top:8px}
-.stat-sub b{color:var(--ok);font-weight:600}
-.stat-sub b.down{color:var(--danger)}
-
-.card{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius);padding:26px 26px;margin-bottom:22px}
+.stat-sub b{color:var(--ok);font-weight:600}.stat-sub b.down{color:var(--danger)}
+.card{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius);padding:26px;margin-bottom:22px}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
-.card-head h3{font-size:19px}
-.card-head p{font-size:12.5px;color:var(--muted);margin-top:3px}
-
+.card-head h3{font-size:19px}.card-head p{font-size:12.5px;color:var(--muted);margin-top:3px}
 .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--line);background:#fff}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
 thead th{background:var(--cream-2);text-align:left;padding:14px 18px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);white-space:nowrap}
 tbody td{padding:15px 18px;border-bottom:1px solid var(--line);vertical-align:middle}
 tbody tr:last-child td{border-bottom:none}
-tbody tr{transition:background .2s}
 tbody tr:hover{background:var(--cream-2)}
 .prod-cell{display:flex;align-items:center;gap:13px}
 .prod-thumb{width:48px;height:60px;border-radius:8px;overflow:hidden;background:linear-gradient(155deg,#ece5da,#cec3b3);flex-shrink:0}
 .prod-thumb img{width:100%;height:100%;object-fit:cover}
 .prod-cell b{font-weight:600;display:block;font-size:13.5px}
 .prod-cell span{font-size:11.5px;color:var(--muted)}
-
 .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .badge .dot{width:6px;height:6px;border-radius:50%}
-.badge.pending{background:#fff4e6;color:#b06a17}
-.badge.pending .dot{background:#e08c1e;animation:pulse 1.6s infinite}
-.badge.confirmed{background:#e8f3ed;color:var(--ok)}
-.badge.confirmed .dot{background:var(--ok)}
-.badge.rejected{background:#fdeaea;color:var(--danger)}
-.badge.rejected .dot{background:var(--danger)}
+.badge.pending{background:#fff4e6;color:#b06a17}.badge.pending .dot{background:#e08c1e;animation:pulse 1.6s infinite}
+.badge.confirmed{background:#e8f3ed;color:var(--ok)}.badge.confirmed .dot{background:var(--ok)}
+.badge.rejected{background:#fdeaea;color:var(--danger)}.badge.rejected .dot{background:var(--danger)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-
 .row-actions{display:flex;gap:6px;justify-content:flex-end}
 .icon-act{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;transition:all .2s var(--ease);color:var(--muted)}
 .icon-act svg{width:15px;height:15px;stroke-width:1.8}
@@ -129,7 +104,6 @@ tbody tr:hover{background:var(--cream-2)}
 .icon-act.edit:hover{background:#e8eef7;color:#3a5a8a}
 .icon-act.del:hover{background:#fdeaea;color:var(--danger)}
 .icon-act.ok:hover{background:#e8f3ed;color:var(--ok)}
-
 .filters-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap}
 .filter-tabs{display:flex;gap:6px;flex-wrap:wrap}
 .ftab{padding:9px 18px;border-radius:100px;font-size:12.5px;font-weight:500;border:1.5px solid var(--line);background:transparent;color:var(--muted);transition:all .25s var(--ease);display:flex;align-items:center;gap:7px}
@@ -137,30 +111,26 @@ tbody tr:hover{background:var(--cream-2)}
 .ftab.active{background:var(--ink);border-color:var(--ink);color:var(--cream)}
 .ftab .c{background:var(--cream-2);color:var(--ink);font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:100px}
 .ftab.active .c{background:rgba(250,247,242,.25);color:var(--cream)}
-
 .search-box{position:relative;flex:1;min-width:220px;max-width:340px}
 .search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke-width:1.8;color:var(--muted);pointer-events:none}
-.search-box input{width:100%;padding:11px 16px 11px 42px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-size:13px;transition:border-color .25s}
+.search-box input{width:100%;padding:11px 16px 11px 42px;border-radius:100px;border:1.5px solid var(--line);background:#fff;font-size:13px}
 .search-box input:focus{outline:none;border-color:var(--ink)}
-
 .modal-bg{position:fixed;inset:0;background:rgba(20,18,16,.6);backdrop-filter:blur(4px);z-index:200;display:none;place-items:center;padding:24px;overflow-y:auto}
 .modal-bg.on{display:grid}
 .modal{background:var(--cream);border-radius:18px;width:100%;max-width:640px;max-height:92vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.3);animation:slideUp .35s var(--ease)}
 @keyframes slideUp{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
 .modal-head{padding:24px 28px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;background:var(--cream);z-index:5}
-.modal-head h3{font-size:21px}
-.modal-head p{font-size:12px;color:var(--muted);margin-top:3px}
+.modal-head h3{font-size:21px}.modal-head p{font-size:12px;color:var(--muted);margin-top:3px}
 .modal-x{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;transition:all .25s;flex-shrink:0}
 .modal-x:hover{background:var(--cream-2);transform:rotate(90deg)}
 .modal-x svg{width:18px;height:18px;stroke-width:1.8}
 .modal-body{padding:26px 28px}
 .modal-foot{padding:20px 28px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;position:sticky;bottom:0;background:var(--cream);z-index:5}
-
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .fld{display:flex;flex-direction:column;gap:7px}
 .fld.full{grid-column:1/-1}
 .fld label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.fld input,.fld select,.fld textarea{padding:12px 16px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:13.5px;transition:all .25s var(--ease)}
+.fld input,.fld select,.fld textarea{padding:12px 16px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:13.5px}
 .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 4px rgba(20,18,16,.06)}
 .fld textarea{resize:vertical;min-height:80px;font-family:inherit}
 .fld small{font-size:11px;color:var(--muted)}
@@ -168,7 +138,6 @@ tbody tr:hover{background:var(--cream-2)}
 .color-inputs input[type=color]{width:44px;height:44px;border-radius:10px;border:1.5px solid var(--line);cursor:pointer;padding:3px;background:#fff}
 .img-preview{width:100%;height:180px;border-radius:12px;overflow:hidden;background:linear-gradient(155deg,#ece5da,#cec3b3);margin-top:8px;display:grid;place-items:center;color:var(--muted);font-size:12px}
 .img-preview img{width:100%;height:100%;object-fit:cover}
-
 .img-tabs{display:flex;gap:8px;margin-bottom:12px}
 .img-tab{flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:12.5px;font-weight:600;color:var(--muted);transition:all .25s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px}
 .img-tab svg{width:15px;height:15px;stroke-width:1.8}
@@ -179,31 +148,25 @@ tbody tr:hover{background:var(--cream-2)}
 .upload-box svg{width:28px;height:28px;stroke-width:1.6;color:var(--muted);margin:0 auto 10px}
 .upload-box b{display:block;font-size:13px;margin-bottom:4px}
 .upload-box span{font-size:11.5px;color:var(--muted)}
-
 .order-section{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--line)}
 .order-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .order-section h4{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;font-family:'Inter',sans-serif;margin-bottom:12px}
-.order-section p{font-size:13.5px;line-height:1.8;color:var(--ink-2)}
-.order-section p b{font-weight:600}
+.order-section p{font-size:13.5px;line-height:1.8;color:var(--ink)}
 .order-items{display:flex;flex-direction:column;gap:12px}
 .oi{display:flex;gap:13px;align-items:center;padding:12px;background:var(--cream-2);border-radius:10px}
 .oi-img{width:52px;height:64px;border-radius:8px;overflow:hidden;background:linear-gradient(155deg,#ece5da,#cec3b3);flex-shrink:0}
 .oi-img img{width:100%;height:100%;object-fit:cover}
-.oi-info{flex:1;font-size:13px}
-.oi-info b{display:block;font-weight:600;margin-bottom:2px}
-.oi-info span{color:var(--muted);font-size:11.5px}
+.oi-info{flex:1;font-size:13px}.oi-info b{display:block;font-weight:600;margin-bottom:2px}.oi-info span{color:var(--muted);font-size:11.5px}
 .oi-price{font-weight:700;font-size:14px}
 .order-total{display:flex;justify-content:space-between;font-size:14px;padding:8px 0}
 .order-total.grand{font-size:19px;font-weight:700;padding-top:14px;border-top:1px solid var(--line);margin-top:8px}
 .order-total.grand span:last-child{font-family:'Playfair Display',serif;font-size:24px}
 .notes-area{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:13px;font-family:inherit;resize:vertical;min-height:70px}
 .notes-area:focus{outline:none;border-color:var(--ink)}
-
 .empty{text-align:center;padding:60px 20px;color:var(--muted)}
 .empty svg{width:52px;height:52px;stroke-width:1.2;color:var(--line);margin:0 auto 16px}
 .empty b{display:block;font-family:'Playfair Display',serif;font-size:20px;color:var(--ink);margin-bottom:6px}
 .empty p{font-size:13.5px}
-
 .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;flex-direction:column;gap:10px;pointer-events:none}
 .toast{background:var(--ink);color:var(--cream);padding:14px 22px;border-radius:100px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:500;box-shadow:0 20px 50px rgba(0,0,0,.3);animation:tIn .4s var(--ease);max-width:380px}
 .toast .tic{width:20px;height:20px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:11px;flex-shrink:0}
@@ -211,37 +174,19 @@ tbody tr:hover{background:var(--cream-2)}
 .toast.out{animation:tOut .35s var(--ease) forwards}
 @keyframes tIn{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
 @keyframes tOut{to{opacity:0;transform:translateY(12px)}}
-
 .setting-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .setting-row:last-child{border-bottom:none}
 .setting-info b{display:block;font-size:14px;font-weight:600;margin-bottom:3px}
 .setting-info span{font-size:12.5px;color:var(--muted);max-width:420px;display:block}
-.setting-action{flex-shrink:0}
 .input-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .input-inline input{padding:10px 16px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:13px;min-width:200px}
 .input-inline input:focus{outline:none;border-color:var(--ink)}
-
+.sync-status{position:fixed;top:16px;right:16px;z-index:500;background:var(--ink);color:var(--cream);padding:8px 16px;border-radius:100px;font-size:11.5px;font-weight:600;display:none;align-items:center;gap:8px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.sync-status.on{display:flex}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
 @media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:900px){
-  .sidebar{transform:translateX(-100%);transition:transform .35s var(--ease);width:260px}
-  .sidebar.open{transform:none}
-  .main{margin-left:0}
-  .topbar{padding:18px 22px}
-  .content{padding:24px 22px 80px}
-  .topbar h1{font-size:20px}
-  .menu-toggle{display:grid !important}
-}
-@media(max-width:640px){
-  .stats{grid-template-columns:1fr}
-  .form-grid{grid-template-columns:1fr}
-  .login-card{padding:38px 26px}
-  .topbar .sub{display:none}
-  .btn span{display:none}
-  .btn svg{margin:0}
-  .btn{padding:11px 14px}
-  .toast-wrap{left:14px;right:14px;bottom:14px}
-  .toast{max-width:none}
-}
+@media(max-width:900px){.sidebar{transform:translateX(-100%);transition:transform .35s var(--ease);width:260px}.sidebar.open{transform:none}.main{margin-left:0}.topbar{padding:18px 22px}.content{padding:24px 22px 80px}.topbar h1{font-size:20px}.menu-toggle{display:grid !important}}
+@media(max-width:640px){.stats{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.login-card{padding:38px 26px}.topbar .sub{display:none}.btn span{display:none}.btn svg{margin:0}.btn{padding:11px 14px}.toast-wrap{left:14px;right:14px;bottom:14px}.toast{max-width:none}}
 .menu-toggle{display:none;width:40px;height:40px;border-radius:10px;place-items:center;background:var(--cream-2);color:var(--ink)}
 .menu-toggle svg{width:18px;height:18px;stroke-width:2}
 </style>
@@ -250,18 +195,11 @@ tbody tr:hover{background:var(--cream-2)}
 
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
-    <div class="login-logo">
-      <b>VESTRA</b>
-      <i>Wear Your Story</i>
-      <div class="badge-admin">Admin Panel</div>
-    </div>
+    <div class="login-logo"><b>VESTRA</b><i>Wear Your Story</i><div class="badge-admin">Admin Panel</div></div>
     <h2>Welcome Back</h2>
     <p>Sign in to manage your store</p>
     <form onsubmit="doLogin(event)">
-      <div class="login-field">
-        <label>Password</label>
-        <input type="password" id="loginPass" placeholder="Enter admin password">
-      </div>
+      <div class="login-field"><label>Password</label><input type="password" id="loginPass" placeholder="Enter admin password"></div>
       <button type="submit" class="login-btn">Sign In →</button>
       <div class="login-err" id="loginErr">Wrong password. Try again.</div>
     </form>
@@ -269,55 +207,29 @@ tbody tr:hover{background:var(--cream-2)}
   </div>
 </div>
 
+<div class="sync-status" id="syncStatus"><span class="sync-dot"></span><span>Syncing to cloud…</span></div>
+
 <div class="app" id="app">
   <aside class="sidebar" id="sidebar">
     <div class="sb-logo"><b>VESTRA</b><i>Admin Panel</i></div>
     <nav class="sb-menu">
-      <div class="sb-link active" data-view="dashboard" onclick="switchView('dashboard')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-        <span>Dashboard</span>
-      </div>
-      <div class="sb-link" data-view="orders" onclick="switchView('orders')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-        <span>Orders</span>
-        <span class="count" id="pendingCount">0</span>
-      </div>
-      <div class="sb-link" data-view="products" onclick="switchView('products')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-        <span>Products</span>
-        <span class="count" id="productCount">0</span>
-      </div>
-      <div class="sb-link" data-view="settings" onclick="switchView('settings')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        <span>Settings</span>
-      </div>
+      <div class="sb-link active" data-view="dashboard" onclick="switchView('dashboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Dashboard</span></div>
+      <div class="sb-link" data-view="orders" onclick="switchView('orders')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>Orders</span><span class="count" id="pendingCount">0</span></div>
+      <div class="sb-link" data-view="products" onclick="switchView('products')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span>Products</span><span class="count" id="productCount">0</span></div>
+      <div class="sb-link" data-view="settings" onclick="switchView('settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg><span>Settings</span></div>
     </nav>
-    <div class="sb-foot">
-      <div class="sb-user"><div class="sb-av">A</div><div><b>Admin</b><span>Store Manager</span></div></div>
-      <button class="sb-logout" onclick="logout()">Sign Out</button>
-    </div>
+    <div class="sb-foot"><div class="sb-user"><div class="sb-av">A</div><div><b>Admin</b><span>Store Manager</span></div></div><button class="sb-logout" onclick="logout()">Sign Out</button></div>
   </aside>
 
   <main class="main">
     <div class="topbar">
       <div style="display:flex;align-items:center;gap:14px">
-        <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-        </button>
-        <div>
-          <h1 id="pageTitle">Dashboard</h1>
-          <div class="sub" id="pageSub">Welcome back, Admin</div>
-        </div>
+        <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub">Welcome back, Admin</div></div>
       </div>
       <div class="topbar-actions">
-        <button class="btn btn-ghost" onclick="exportData()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-          <span>Export</span>
-        </button>
-        <button class="btn btn-solid" onclick="openProductModal()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
-          <span>Add Product</span>
-        </button>
+        <button class="btn btn-ghost" onclick="exportData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg><span>Export</span></button>
+        <button class="btn btn-solid" onclick="openProductModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg><span>Add Product</span></button>
       </div>
     </div>
 
@@ -334,14 +246,8 @@ tbody tr:hover{background:var(--cream-2)}
           <div class="stat"><div class="stat-ico purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><div class="stat-label">Total Products</div><div class="stat-value" id="statProducts">0</div><div class="stat-sub" id="statLowStock">0 low on stock</div></div>
           <div class="stat"><div class="stat-ico orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></div><div class="stat-label">Avg. Order Value</div><div class="stat-value" id="statAOV">₹0</div><div class="stat-sub">Across all orders</div></div>
         </div>
-        <div class="card">
-          <div class="card-head"><div><h3>Recent Orders</h3><p>Latest 5 orders from your store</p></div><button class="btn btn-ghost btn-sm" onclick="switchView('orders')">View All →</button></div>
-          <div id="recentOrders"></div>
-        </div>
-        <div class="card">
-          <div class="card-head"><div><h3>Low Stock Alert</h3><p>Products with stock below 10 units</p></div></div>
-          <div id="lowStockList"></div>
-        </div>
+        <div class="card"><div class="card-head"><div><h3>Recent Orders</h3><p>Latest 5 orders from your store</p></div><button class="btn btn-ghost btn-sm" onclick="switchView('orders')">View All →</button></div><div id="recentOrders"></div></div>
+        <div class="card"><div class="card-head"><div><h3>Low Stock Alert</h3><p>Products with stock below 10 units</p></div></div><div id="lowStockList"></div></div>
       </section>
 
       <section class="view" id="view-orders">
@@ -352,10 +258,7 @@ tbody tr:hover{background:var(--cream-2)}
             <button class="ftab" data-f="confirmed">Confirmed <span class="c" id="tConf">0</span></button>
             <button class="ftab" data-f="rejected">Rejected <span class="c" id="tRej">0</span></button>
           </div>
-          <div class="search-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-            <input type="text" id="orderSearch" placeholder="Search by order ID or name..." oninput="renderOrders()">
-          </div>
+          <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="orderSearch" placeholder="Search by order ID or name..." oninput="renderOrders()"></div>
         </div>
         <div class="card" style="padding:0;overflow:hidden"><div id="ordersTable"></div></div>
       </section>
@@ -369,10 +272,7 @@ tbody tr:hover{background:var(--cream-2)}
             <button class="ftab" data-f="outerwear">Outerwear</button>
             <button class="ftab" data-f="accessories">Accessories</button>
           </div>
-          <div class="search-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-            <input type="text" id="prodSearch" placeholder="Search products..." oninput="renderProducts()">
-          </div>
+          <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" id="prodSearch" placeholder="Search products..." oninput="renderProducts()"></div>
         </div>
         <div class="card" style="padding:0;overflow:hidden"><div id="productsTable"></div></div>
       </section>
@@ -380,189 +280,101 @@ tbody tr:hover{background:var(--cream-2)}
       <section class="view" id="view-settings">
         <div class="card">
           <div class="card-head"><div><h3>Store Settings</h3><p>Configure your store preferences</p></div></div>
-          <div class="setting-row">
-            <div class="setting-info"><b>WhatsApp Number</b><span>Orders will be sent to this WhatsApp number for confirmation</span></div>
-            <div class="setting-action"><div class="input-inline"><input type="tel" id="setWhatsapp" placeholder="919876543210"><button class="btn btn-solid btn-sm" onclick="saveWhatsapp()">Save</button></div></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info"><b>Admin Password</b><span>Change the password used to access this admin panel</span></div>
-            <div class="setting-action"><div class="input-inline"><input type="password" id="setPassword" placeholder="New password"><button class="btn btn-solid btn-sm" onclick="savePassword()">Update</button></div></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info"><b>Store Name</b><span>Display name of your store</span></div>
-            <div class="setting-action"><div class="input-inline"><input type="text" id="setStoreName" placeholder="VESTRA"><button class="btn btn-solid btn-sm" onclick="saveStoreName()">Save</button></div></div>
-          </div>
+          <div class="setting-row"><div class="setting-info"><b>WhatsApp Number</b><span>Orders will be sent to this WhatsApp number</span></div><div class="input-inline"><input type="tel" id="setWhatsapp" placeholder="919876543210"><button class="btn btn-solid btn-sm" onclick="saveWhatsapp()">Save</button></div></div>
+          <div class="setting-row"><div class="setting-info"><b>Admin Password</b><span>Change the password used to access this admin panel</span></div><div class="input-inline"><input type="password" id="setPassword" placeholder="New password"><button class="btn btn-solid btn-sm" onclick="savePassword()">Update</button></div></div>
+          <div class="setting-row"><div class="setting-info"><b>Store Name</b><span>Display name of your store</span></div><div class="input-inline"><input type="text" id="setStoreName" placeholder="VESTRA"><button class="btn btn-solid btn-sm" onclick="saveStoreName()">Save</button></div></div>
         </div>
-
         <div class="card">
           <div class="card-head"><div><h3>Data Management</h3><p>Backup and restore your store data</p></div></div>
-          <div class="setting-row">
-            <div class="setting-info"><b>Export All Data</b><span>Download a JSON backup of products, orders and settings</span></div>
-            <div class="setting-action"><button class="btn btn-solid btn-sm" onclick="exportData()">Download JSON</button></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info"><b>Import Data</b><span>Restore products and orders from a JSON backup</span></div>
-            <div class="setting-action">
-              <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-              <button class="btn btn-ghost btn-sm" onclick="document.getElementById('importFile').click()">Choose File</button>
-            </div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info"><b>Reset Products to Default</b><span>Restore the original product catalog (orders are kept)</span></div>
-            <div class="setting-action"><button class="btn btn-ghost btn-sm" onclick="resetProducts()">Reset Products</button></div>
-          </div>
-          <div class="setting-row">
-            <div class="setting-info"><b style="color:var(--danger)">Clear All Orders</b><span>Permanently delete all orders. This cannot be undone.</span></div>
-            <div class="setting-action"><button class="btn btn-danger btn-sm" onclick="clearOrders()">Delete All Orders</button></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-head"><div><h3>Integration Guide</h3><p>How to connect admin panel with your website</p></div></div>
-          <div style="font-size:13.5px;line-height:1.9;color:var(--ink-2)">
-            <p style="margin-bottom:12px"><b>1. Product Sync:</b> Export products as JSON → upload as <code style="background:var(--cream-2);padding:2px 8px;border-radius:6px;font-size:12px">products.json</code> to your GitHub repo.</p>
-            <p style="margin-bottom:12px"><b>2. Order Flow:</b> Customer places order → receives WhatsApp confirmation → you receive their message → add the order here → confirm or reject.</p>
-            <p><b>3. Status Update:</b> When you confirm/reject, the customer is notified via WhatsApp reply.</p>
-          </div>
+          <div class="setting-row"><div class="setting-info"><b>Export All Data</b><span>Download a JSON backup</span></div><button class="btn btn-solid btn-sm" onclick="exportData()">Download JSON</button></div>
+          <div class="setting-row"><div class="setting-info"><b>Import Data</b><span>Restore from a JSON backup</span></div><div><input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)"><button class="btn btn-ghost btn-sm" onclick="document.getElementById('importFile').click()">Choose File</button></div></div>
+          <div class="setting-row"><div class="setting-info"><b>Reset Products</b><span>Restore original catalog</span></div><button class="btn btn-ghost btn-sm" onclick="resetProducts()">Reset Products</button></div>
+          <div class="setting-row"><div class="setting-info"><b style="color:var(--danger)">Clear All Orders</b><span>Permanently delete all orders</span></div><button class="btn btn-danger btn-sm" onclick="clearOrders()">Delete All</button></div>
         </div>
       </section>
     </div>
   </main>
 </div>
 
-<!-- ===== PRODUCT MODAL ===== -->
 <div class="modal-bg" id="productModal">
   <div class="modal">
-    <div class="modal-head">
-      <div><h3 id="prodModalTitle">Add Product</h3><p>Fill in the product details below</p></div>
-      <button class="modal-x" onclick="closeModal('productModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-    </div>
+    <div class="modal-head"><div><h3 id="prodModalTitle">Add Product</h3><p>Fill in the product details</p></div><button class="modal-x" onclick="closeModal('productModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
     <div class="modal-body">
       <form id="prodForm" onsubmit="saveProduct(event)">
-        <input type="hidden" id="pId">
-        <input type="hidden" id="pImgData" value="">
+        <input type="hidden" id="pId"><input type="hidden" id="pImgData" value="">
         <div class="form-grid">
-          <div class="fld full">
-            <label>Product Name *</label>
-            <input type="text" id="pName" required placeholder="e.g. Oversized Linen Shirt">
-          </div>
-          <div class="fld">
-            <label>Category *</label>
-            <select id="pCat" required>
-              <option value="men">Men</option>
-              <option value="women">Women</option>
-              <option value="outerwear">Outerwear</option>
-              <option value="accessories">Accessories</option>
-            </select>
-          </div>
-          <div class="fld">
-            <label>Badge</label>
-            <select id="pBadge">
-              <option value="">None</option>
-              <option value="New">New</option>
-              <option value="Sale">Sale</option>
-              <option value="Bestseller">Bestseller</option>
-            </select>
-          </div>
-          <div class="fld">
-            <label>Price (₹) *</label>
-            <input type="number" id="pPrice" required min="0" placeholder="1899">
-          </div>
-          <div class="fld">
-            <label>Old Price (₹)</label>
-            <input type="number" id="pOld" min="0" placeholder="2499">
-          </div>
-          <div class="fld">
-            <label>Stock Quantity</label>
-            <input type="number" id="pStock" min="0" placeholder="50" value="50">
-          </div>
-          <div class="fld">
-            <label>Rating (0–5)</label>
-            <input type="number" id="pRating" min="0" max="5" step="0.1" placeholder="4.8" value="4.8">
-          </div>
-
+          <div class="fld full"><label>Product Name *</label><input type="text" id="pName" required placeholder="e.g. Oversized Linen Shirt"></div>
+          <div class="fld"><label>Category *</label><select id="pCat" required><option value="men">Men</option><option value="women">Women</option><option value="outerwear">Outerwear</option><option value="accessories">Accessories</option></select></div>
+          <div class="fld"><label>Badge</label><select id="pBadge"><option value="">None</option><option value="New">New</option><option value="Sale">Sale</option><option value="Bestseller">Bestseller</option></select></div>
+          <div class="fld"><label>Price (₹) *</label><input type="number" id="pPrice" required min="0" placeholder="1899"></div>
+          <div class="fld"><label>Old Price (₹)</label><input type="number" id="pOld" min="0" placeholder="2499"></div>
+          <div class="fld"><label>Stock Quantity</label><input type="number" id="pStock" min="0" value="50"></div>
+          <div class="fld"><label>Rating (0–5)</label><input type="number" id="pRating" min="0" max="5" step="0.1" value="4.8"></div>
           <div class="fld full">
             <label>Product Image *</label>
             <div class="img-tabs">
-              <button type="button" class="img-tab active" id="tabUrl" onclick="switchImgTab('url')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-                Paste URL
-              </button>
-              <button type="button" class="img-tab" id="tabUpload" onclick="switchImgTab('upload')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
-                Upload File
-              </button>
+              <button type="button" class="img-tab active" id="tabUrl" onclick="switchImgTab('url')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>Paste URL</button>
+              <button type="button" class="img-tab" id="tabUpload" onclick="switchImgTab('upload')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>Upload File</button>
             </div>
-            <div id="imgUrlBox">
-              <input type="text" id="pImg" placeholder="https://... OR Unsplash photo ID" oninput="previewImage()">
-              <small>Example: <b>1521572163474-6864f9cf17ab</b> or full https URL</small>
-            </div>
+            <div id="imgUrlBox"><input type="text" id="pImg" placeholder="https://... OR Unsplash ID" oninput="previewImage()"><small>Example: <b>1521572163474-6864f9cf17ab</b> or full URL</small></div>
             <div id="imgUploadBox" style="display:none">
               <input type="file" id="pImgFile" accept="image/*" onchange="handleImageUpload(event)" style="display:none">
-              <label for="pImgFile" class="upload-box">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
-                <b>Choose Image File</b>
-                <span>Max 200KB. Tap to select from gallery</span>
-              </label>
-              <small style="display:block;margin-top:8px;font-size:11px;color:var(--muted)">⚠️ Larger images should be hosted elsewhere (Imgur, Cloudinary) and pasted as URL.</small>
+              <label for="pImgFile" class="upload-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg><b>Choose Image File</b><span>Max 200KB</span></label>
             </div>
             <div class="img-preview" id="imgPreview">Image preview</div>
           </div>
-
-          <div class="fld full">
-            <label>Colours</label>
-            <div class="color-inputs" id="colorInputs"></div>
-            <button type="button" class="btn btn-ghost btn-sm" style="margin-top:8px;align-self:flex-start" onclick="addColorInput()">+ Add Colour</button>
-            <small>Max 5 colours</small>
-          </div>
-
-          <div class="fld full">
-            <label>Description *</label>
-            <textarea id="pDesc" required placeholder="Describe the product..."></textarea>
-          </div>
+          <div class="fld full"><label>Colours</label><div class="color-inputs" id="colorInputs"></div><button type="button" class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="addColorInput()">+ Add Colour</button></div>
+          <div class="fld full"><label>Description *</label><textarea id="pDesc" required placeholder="Describe the product..."></textarea></div>
         </div>
       </form>
     </div>
-    <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="closeModal('productModal')">Cancel</button>
-      <button class="btn btn-solid" onclick="document.getElementById('prodForm').requestSubmit()">Save Product</button>
-    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal('productModal')">Cancel</button><button class="btn btn-solid" onclick="document.getElementById('prodForm').requestSubmit()">Save Product</button></div>
   </div>
 </div>
 
-<!-- ===== ORDER MODAL ===== -->
 <div class="modal-bg" id="orderModal">
   <div class="modal" style="max-width:720px">
-    <div class="modal-head">
-      <div><h3 id="oModalTitle">Order Details</h3><p id="oModalSub">Order ID</p></div>
-      <button class="modal-x" onclick="closeModal('orderModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-    </div>
+    <div class="modal-head"><div><h3 id="oModalTitle">Order Details</h3><p id="oModalSub">Order ID</p></div><button class="modal-x" onclick="closeModal('orderModal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
     <div class="modal-body" id="orderModalBody"></div>
     <div class="modal-foot" id="orderModalFoot"></div>
   </div>
 </div>
 
-<!-- ===== CONFIRM MODAL ===== -->
 <div class="modal-bg" id="confirmModal">
   <div class="modal" style="max-width:420px">
     <div class="modal-body" style="text-align:center;padding:36px 28px">
-      <div style="width:64px;height:64px;border-radius:50%;background:var(--cream-2);color:var(--muted);display:grid;place-items:center;margin:0 auto 20px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:30px;height:30px;stroke-width:1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
-      </div>
       <h3 id="confirmTitle" style="font-size:21px;margin-bottom:8px">Are you sure?</h3>
       <p id="confirmMsg" style="font-size:13.5px;color:var(--muted);margin-bottom:24px">This action cannot be undone.</p>
-      <div style="display:flex;gap:10px;justify-content:center">
-        <button class="btn btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
-        <button class="btn btn-danger" id="confirmBtn">Confirm</button>
-      </div>
+      <div style="display:flex;gap:10px;justify-content:center"><button class="btn btn-ghost" onclick="closeModal('confirmModal')">Cancel</button><button class="btn btn-danger" id="confirmBtn">Confirm</button></div>
     </div>
   </div>
 </div>
 
 <div class="toast-wrap" id="toastWrap"></div>
 
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js';
+import { getFirestore, doc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBs5MWQMDkvrgP6UvWQ6wrN3C5Z1SNAEg",
+  authDomain: "vestra-clothing.firebaseapp.com",
+  projectId: "vestra-clothing",
+  storageBucket: "vestra-clothing.firebasestorage.app",
+  messagingSenderId: "853781252359",
+  appId: "1:853781252359:web:232ffb78003ed28e5e7daa2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.__fb = { db, doc, setDoc, onSnapshot };
+window.__fbReady = true;
+document.dispatchEvent(new Event('firebase-ready'));
+</script>
+
 <script>
-const STORAGE={PRODUCTS:'vestra_products',ORDERS:'vestra_orders',SETTINGS:'vestra_settings',AUTH:'vestra_auth'};
+const STORAGE={AUTH:'vestra_auth'};
 const DEFAULT_PASSWORD='vestra2026';
 const DEFAULT_PRODUCTS=[
   {id:1,name:'Oversized Linen Shirt',cat:'men',price:1899,old:2499,badge:'New',rating:4.8,reviews:124,img:'1521572163474-6864f9cf17ab',colors:['#e8e2d8','#1b1b1b','#8a9a7b'],desc:'Breathable European linen, cut relaxed through the body with a dropped shoulder.',stock:42},
@@ -585,6 +397,7 @@ const DEFAULT_PRODUCTS=[
 
 let state={products:[],orders:[],settings:{whatsapp:'919876543210',password:DEFAULT_PASSWORD,storeName:'VESTRA'},currentView:'dashboard',orderFilter:'all',prodFilter:'all',editingProductId:null,viewingOrderId:null};
 let imgTab='url';
+let fbReady=false;
 
 const $=id=>document.getElementById(id);
 const money=n=>'₹'+Number(n||0).toLocaleString('en-IN');
@@ -593,21 +406,72 @@ function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function timeAgo(iso){const d=new Date(iso);const diff=(Date.now()-d.getTime())/1000;if(diff<60)return'just now';if(diff<3600)return Math.floor(diff/60)+'m ago';if(diff<86400)return Math.floor(diff/3600)+'h ago';if(diff<604800)return Math.floor(diff/86400)+'d ago';return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});}
 function fmtDate(iso){return new Date(iso).toLocaleString('en-IN',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});}
 
-function loadData(){
+function showSync(on){$('syncStatus').classList.toggle('on',on);}
+
+/* ===== FIREBASE STORAGE ===== */
+async function saveProducts(){
+  if(!fbReady){toast('Firebase not ready','err');return;}
+  showSync(true);
   try{
-    const p=localStorage.getItem(STORAGE.PRODUCTS);
-    state.products=p?JSON.parse(p):JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-    if(!p)localStorage.setItem(STORAGE.PRODUCTS,JSON.stringify(state.products));
-    const o=localStorage.getItem(STORAGE.ORDERS);
-    state.orders=o?JSON.parse(o):[];
-    const s=localStorage.getItem(STORAGE.SETTINGS);
-    if(s)state.settings={...state.settings,...JSON.parse(s)};
-    else localStorage.setItem(STORAGE.SETTINGS,JSON.stringify(state.settings));
-  }catch(e){console.error(e);state.products=JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));state.orders=[];}
+    const {db,doc,setDoc}=window.__fb;
+    await setDoc(doc(db,'store','products'),{list:state.products,updatedAt:new Date().toISOString()});
+    toast('Products synced to cloud ✓');
+  }catch(e){console.error(e);toast('Sync error: '+e.message,'err');}
+  showSync(false);
+  updateSidebarCounts();
 }
-function saveProducts(){localStorage.setItem(STORAGE.PRODUCTS,JSON.stringify(state.products));updateSidebarCounts();}
-function saveOrders(){localStorage.setItem(STORAGE.ORDERS,JSON.stringify(state.orders));updateSidebarCounts();}
-function saveSettings(){localStorage.setItem(STORAGE.SETTINGS,JSON.stringify(state.settings));}
+async function saveOrders(){
+  if(!fbReady)return;
+  showSync(true);
+  try{
+    const {db,doc,setDoc}=window.__fb;
+    await setDoc(doc(db,'store','orders'),{list:state.orders,updatedAt:new Date().toISOString()});
+  }catch(e){console.error(e);toast('Orders sync error','err');}
+  showSync(false);
+  updateSidebarCounts();
+}
+async function saveSettings(){
+  if(!fbReady)return;
+  try{
+    const {db,doc,setDoc}=window.__fb;
+    await setDoc(doc(db,'store','settings'),state.settings);
+    toast('Settings saved ✓');
+  }catch(e){console.error(e);toast('Settings error','err');}
+}
+
+function startFirebaseListeners(){
+  const {db,doc,onSnapshot}=window.__fb;
+
+  // Settings listener
+  onSnapshot(doc(db,'store','settings'),(snap)=>{
+    if(snap.exists())state.settings={...state.settings,...snap.data()};
+    renderSettings();
+  },(err)=>{console.error('Settings listener:',err);});
+
+  // Products listener (realtime)
+  onSnapshot(doc(db,'store','products'),(snap)=>{
+    if(snap.exists()&&snap.data().list){
+      state.products=snap.data().list;
+    }else{
+      // Seed with defaults on first run
+      state.products=JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+      saveProducts();
+    }
+    updateSidebarCounts();
+    renderProducts();
+    renderDashboard();
+  },(err)=>{console.error('Products listener:',err);toast('Products sync error','err');});
+
+  // Orders listener (realtime)
+  onSnapshot(doc(db,'store','orders'),(snap)=>{
+    state.orders=snap.exists()&&snap.data().list?snap.data().list:[];
+    updateSidebarCounts();
+    renderOrders();
+    renderDashboard();
+  },(err)=>{console.error('Orders listener:',err);});
+
+  console.log('✓ Firebase listeners active');
+}
 
 function doLogin(e){
   e.preventDefault();
@@ -677,17 +541,14 @@ function renderDashboard(){
 
   const recent=[...state.orders].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);
   if(!recent.length){
-    $('recentOrders').innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg><b>No orders yet</b><p>Orders will appear here once customers start placing them.</p></div>`;
-  } else {
+    $('recentOrders').innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg><b>No orders yet</b><p>Orders will appear here once customers place them.</p></div>`;
+  }else{
     $('recentOrders').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Time</th><th></th></tr></thead><tbody>${recent.map(o=>`<tr><td><b>${escapeHtml(o.id)}</b></td><td>${escapeHtml((o.customer?.firstName||'')+' '+(o.customer?.lastName||''))||'—'}</td><td><b>${money(o.total)}</b></td><td><span class="badge ${o.status}"><span class="dot"></span>${o.status}</span></td><td style="color:var(--muted);font-size:12.5px">${timeAgo(o.createdAt)}</td><td><button class="btn btn-ghost btn-sm" onclick="viewOrder('${o.id}')">View</button></td></tr>`).join('')}</tbody></table></div>`;
   }
 
   const low=state.products.filter(p=>(p.stock??0)<10).sort((a,b)=>(a.stock||0)-(b.stock||0));
-  if(!low.length){
-    $('lowStockList').innerHTML=`<div class="empty" style="padding:30px 20px"><b>All good! ✓</b><p>No products are running low on stock.</p></div>`;
-  } else {
-    $('lowStockList').innerHTML=low.map(p=>`<div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)"><div class="prod-thumb" style="width:42px;height:52px"><img src="${imgUrl(p.img,100)}" alt="" onerror="this.style.display='none'"></div><div style="flex:1"><b style="font-size:13.5px;display:block">${escapeHtml(p.name)}</b><span style="font-size:11.5px;color:var(--muted);text-transform:capitalize">${p.cat}</span></div><div style="font-size:13px;font-weight:700;color:${(p.stock||0)<5?'var(--danger)':'var(--warn)'}">${p.stock||0} left</div></div>`).join('');
-  }
+  if(!low.length){$('lowStockList').innerHTML=`<div class="empty" style="padding:30px 20px"><b>All good! ✓</b><p>No products are running low on stock.</p></div>`;}
+  else{$('lowStockList').innerHTML=low.map(p=>`<div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)"><div class="prod-thumb" style="width:42px;height:52px"><img src="${imgUrl(p.img,100)}" alt="" onerror="this.style.display='none'"></div><div style="flex:1"><b style="font-size:13.5px;display:block">${escapeHtml(p.name)}</b><span style="font-size:11.5px;color:var(--muted);text-transform:capitalize">${p.cat}</span></div><div style="font-size:13px;font-weight:700;color:${(p.stock||0)<5?'var(--danger)':'var(--warn)'}">${p.stock||0} left</div></div>`).join('');}
 }
 
 document.querySelectorAll('#orderTabs .ftab').forEach(t=>{t.addEventListener('click',()=>{state.orderFilter=t.dataset.f;document.querySelectorAll('#orderTabs .ftab').forEach(x=>x.classList.toggle('active',x===t));renderOrders();});});
@@ -713,24 +574,25 @@ function renderOrders(){
   $('ordersTable').innerHTML=`<div class="table-wrap" style="border:none;border-radius:0"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th style="text-align:right">Actions</th></tr></thead><tbody>${list.map(o=>{const items=o.items||[];const itemCount=items.reduce((s,i)=>s+(i.qty||0),0);return `<tr><td><b>${escapeHtml(o.id)}</b></td><td><b style="display:block;font-size:13.5px">${escapeHtml((o.customer?.firstName||'')+' '+(o.customer?.lastName||''))||'—'}</b><span style="font-size:11.5px;color:var(--muted)">${escapeHtml(o.customer?.phone||'')}</span></td><td><b>${itemCount}</b> item${itemCount!==1?'s':''}</td><td><b>${money(o.total)}</b></td><td><span class="badge ${o.status}"><span class="dot"></span>${o.status}</span></td><td style="color:var(--muted);font-size:12.5px">${timeAgo(o.createdAt)}</td><td><div class="row-actions">${o.status==='pending'?`<button class="icon-act ok" title="Confirm" onclick="changeStatus('${o.id}','confirmed')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6L9 17l-5-5"/></svg></button><button class="icon-act del" title="Reject" onclick="changeStatus('${o.id}','rejected')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg></button>`:''}<button class="icon-act" title="View" onclick="viewOrder('${o.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button><button class="icon-act del" title="Delete" onclick="deleteOrder('${o.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button></div></td></tr>`;}).join('')}</tbody></table></div>`;
 }
 
-function changeStatus(id,status){
+async function changeStatus(id,status){
   const order=state.orders.find(o=>o.id===id);
   if(!order)return;
   const labels={confirmed:'Confirm',rejected:'Reject'};
   const msgs={confirmed:`Confirm order ${id}? Customer will be notified.`,rejected:`Reject order ${id}? Customer will be notified.`};
-  showConfirm(labels[status],msgs[status],status==='rejected'?'danger':'ok',()=>{
+  showConfirm(labels[status],msgs[status],status==='rejected'?'danger':'ok',async()=>{
     order.status=status;
     order.updatedAt=new Date().toISOString();
-    saveOrders();renderOrders();renderDashboard();
+    await saveOrders();
+    renderOrders();renderDashboard();
     toast(`Order ${id} ${status}`);
     closeModal('orderModal');closeModal('confirmModal');
   });
 }
 
-function deleteOrder(id){
-  showConfirm('Delete Order',`Delete order ${id}? This cannot be undone.`,'danger',()=>{
+async function deleteOrder(id){
+  showConfirm('Delete Order',`Delete order ${id}? This cannot be undone.`,'danger',async()=>{
     state.orders=state.orders.filter(o=>o.id!==id);
-    saveOrders();renderOrders();renderDashboard();
+    await saveOrders();renderOrders();renderDashboard();
     toast('Order deleted');closeModal('orderModal');closeModal('confirmModal');
   });
 }
@@ -759,7 +621,7 @@ function viewOrder(id){
   openModal('orderModal');
 }
 
-function saveOrderNotes(id){const o=state.orders.find(x=>x.id===id);if(!o)return;const notes=$('orderNotes')?.value||'';if(o.notes!==notes){o.notes=notes;saveOrders();}}
+async function saveOrderNotes(id){const o=state.orders.find(x=>x.id===id);if(!o)return;const notes=$('orderNotes')?.value||'';if(o.notes!==notes){o.notes=notes;await saveOrders();}}
 
 function printInvoice(id){
   const o=state.orders.find(x=>x.id===id);
@@ -778,10 +640,7 @@ function renderProducts(){
   if(state.prodFilter!=='all')list=list.filter(p=>p.cat===state.prodFilter);
   const search=($('prodSearch')?.value||'').trim().toLowerCase();
   if(search)list=list.filter(p=>p.name.toLowerCase().includes(search)||(p.cat||'').toLowerCase().includes(search));
-  if(!list.length){
-    $('productsTable').innerHTML=`<div class="empty" style="padding:60px 20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><b>No products found</b><p>Try a different category or add a new product.</p></div>`;
-    return;
-  }
+  if(!list.length){$('productsTable').innerHTML=`<div class="empty" style="padding:60px 20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><b>No products found</b><p>Try a different category or add a new product.</p></div>`;return;}
   $('productsTable').innerHTML=`<div class="table-wrap" style="border:none;border-radius:0"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Rating</th><th style="text-align:right">Actions</th></tr></thead><tbody>${list.map(p=>{const stock=p.stock??0;const stockColor=stock<5?'var(--danger)':stock<15?'var(--warn)':'var(--ok)';return `<tr><td><div class="prod-cell"><div class="prod-thumb"><img src="${imgUrl(p.img,150)}" alt="" onerror="this.style.display='none'"></div><div><b>${escapeHtml(p.name)}</b><span>${p.badge?escapeHtml(p.badge)+' · ':''}SKU VST-${String(p.id).padStart(4,'0')}</span></div></div></td><td style="text-transform:capitalize">${escapeHtml(p.cat)}</td><td><b>${money(p.price)}</b>${p.old?`<br><s style="color:var(--muted);font-size:12px">${money(p.old)}</s>`:''}</td><td><span style="font-weight:700;color:${stockColor}">${stock}</span><span style="color:var(--muted);font-size:11.5px"> units</span></td><td>★ ${p.rating||'—'}</td><td><div class="row-actions"><button class="icon-act edit" onclick="openProductModal(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4z"/></svg></button><button class="icon-act del" onclick="deleteProduct(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button></div></td></tr>`;}).join('')}</tbody></table></div>`;
 }
 
@@ -796,10 +655,7 @@ function switchImgTab(tab){
 function handleImageUpload(e){
   const file=e.target.files[0];
   if(!file)return;
-  if(file.size>200*1024){
-    toast('Image too large. Please use an image under 200KB.','err');
-    return;
-  }
+  if(file.size>200*1024){toast('Image too large. Use an image under 200KB.','err');return;}
   const reader=new FileReader();
   reader.onload=ev=>{
     $('pImgData').value=ev.target.result;
@@ -843,14 +699,14 @@ function openProductModal(id){
       $('pImgData').value=p.img;
       $('pImg').value='';
       $('imgPreview').innerHTML=`<img src="${p.img}" alt="preview">`;
-    } else {
+    }else{
       $('pImg').value=p.img||'';
       $('imgPreview').innerHTML='Image preview';
       previewImage();
     }
     const ci=$('colorInputs');ci.innerHTML='';
     (p.colors&&p.colors.length?p.colors:['#e8e2d8']).forEach(c=>addColorInput(c));
-  } else {
+  }else{
     $('pId').value='';
     $('pStock').value=50;
     $('pRating').value=4.8;
@@ -870,7 +726,7 @@ function addColorInput(color){
   ci.appendChild(inp);
 }
 
-function saveProduct(e){
+async function saveProduct(e){
   e.preventDefault();
   const id=$('pId').value;
   const colors=[...$('colorInputs').querySelectorAll('input')].map(i=>i.value);
@@ -891,29 +747,32 @@ function saveProduct(e){
     const idx=state.products.findIndex(p=>p.id==id);
     if(idx>-1)state.products[idx]={...state.products[idx],...data};
     toast('Product updated ✓');
-  } else {
+  }else{
     const newId=Math.max(0,...state.products.map(p=>p.id))+1;
     state.products.push({id:newId,...data});
     toast('Product added ✓');
   }
-  saveProducts();renderProducts();renderDashboard();
+  await saveProducts();
+  renderProducts();renderDashboard();
   closeModal('productModal');
 }
 
-function deleteProduct(id){
+async function deleteProduct(id){
   const p=state.products.find(x=>x.id===id);
   if(!p)return;
-  showConfirm('Delete Product',`Delete "${p.name}"? This cannot be undone.`,'danger',()=>{
+  showConfirm('Delete Product',`Delete "${p.name}"? This cannot be undone.`,'danger',async()=>{
     state.products=state.products.filter(x=>x.id!==id);
-    saveProducts();renderProducts();renderDashboard();
+    await saveProducts();
+    renderProducts();renderDashboard();
     toast('Product deleted');closeModal('confirmModal');
   });
 }
 
-function resetProducts(){
-  showConfirm('Reset Products','Restore the original catalog? Custom products will be lost (orders are kept).','danger',()=>{
+async function resetProducts(){
+  showConfirm('Reset Products','Restore original catalog? Custom products will be lost (orders are kept).','danger',async()=>{
     state.products=JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-    saveProducts();renderProducts();renderDashboard();
+    await saveProducts();
+    renderProducts();renderDashboard();
     toast('Products reset');closeModal('confirmModal');
   });
 }
@@ -924,9 +783,9 @@ function renderSettings(){
   $('setPassword').value='';
 }
 
-function saveWhatsapp(){const v=$('setWhatsapp').value.replace(/\D/g,'');if(v.length<10)return toast('Enter a valid number','err');state.settings.whatsapp=v;saveSettings();toast('WhatsApp updated ✓');}
-function savePassword(){const v=$('setPassword').value;if(v.length<4)return toast('Min 4 characters','err');state.settings.password=v;saveSettings();$('setPassword').value='';toast('Password updated ✓');}
-function saveStoreName(){state.settings.storeName=$('setStoreName').value.trim()||'VESTRA';saveSettings();toast('Store name updated ✓');}
+async function saveWhatsapp(){const v=$('setWhatsapp').value.replace(/\D/g,'');if(v.length<10)return toast('Enter a valid number','err');state.settings.whatsapp=v;await saveSettings();}
+async function savePassword(){const v=$('setPassword').value;if(v.length<4)return toast('Min 4 characters','err');state.settings.password=v;await saveSettings();$('setPassword').value='';}
+async function saveStoreName(){state.settings.storeName=$('setStoreName').value.trim()||'VESTRA';await saveSettings();}
 
 function exportData(){
   const data={products:state.products,orders:state.orders,settings:state.settings,exportedAt:new Date().toISOString(),version:'1.0'};
@@ -938,16 +797,16 @@ function exportData(){
   toast('Backup downloaded ✓');
 }
 
-function importData(e){
+async function importData(e){
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=ev=>{
+  reader.onload=async ev=>{
     try{
       const data=JSON.parse(ev.target.result);
       if(data.products)state.products=data.products;
       if(data.orders)state.orders=data.orders;
       if(data.settings)state.settings={...state.settings,...data.settings};
-      saveProducts();saveOrders();saveSettings();
+      await saveProducts();await saveOrders();await saveSettings();
       renderAll();toast('Data imported ✓');
     }catch(err){toast('Invalid JSON','err');}
   };
@@ -955,16 +814,16 @@ function importData(e){
   e.target.value='';
 }
 
-function clearOrders(){
-  showConfirm('Clear All Orders','Permanently delete all orders? Cannot be undone.','danger',()=>{
-    state.orders=[];saveOrders();renderOrders();renderDashboard();
+async function clearOrders(){
+  showConfirm('Clear All Orders','Permanently delete all orders? Cannot be undone.','danger',async()=>{
+    state.orders=[];await saveOrders();
+    renderOrders();renderDashboard();
     toast('All orders cleared');closeModal('confirmModal');
   });
 }
 
 function openModal(id){$(id).classList.add('on');document.body.style.overflow='hidden';}
 function closeModal(id){$(id).classList.remove('on');document.body.style.overflow='';}
-
 function showConfirm(title,msg,type,cb){
   $('confirmTitle').textContent=title;
   $('confirmMsg').textContent=msg;
@@ -980,11 +839,27 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelec
 
 function renderAll(){updateSidebarCounts();renderDashboard();renderOrders();renderProducts();renderSettings();}
 
-(function init(){
-  loadData();
+/* Wait for Firebase to be ready, then start listeners */
+function startApp(){
+  fbReady=true;
+  startFirebaseListeners();
   if(sessionStorage.getItem(STORAGE.AUTH)==='1')showApp();
   else setTimeout(()=>$('loginPass')?.focus(),200);
-})();
+}
+
+if(window.__fbReady){startApp();}
+else document.addEventListener('firebase-ready',startApp);
+
+// Expose functions globally (since script is not module)
+window.doLogin=doLogin;window.logout=logout;window.switchView=switchView;
+window.openProductModal=openProductModal;window.closeModal=closeModal;
+window.saveProduct=saveProduct;window.deleteProduct=deleteProduct;window.resetProducts=resetProducts;
+window.changeStatus=changeStatus;window.deleteOrder=deleteOrder;window.viewOrder=viewOrder;
+window.saveOrderNotes=saveOrderNotes;window.printInvoice=printInvoice;
+window.switchImgTab=switchImgTab;window.handleImageUpload=handleImageUpload;window.previewImage=previewImage;
+window.addColorInput=addColorInput;window.saveWhatsapp=saveWhatsapp;window.savePassword=savePassword;
+window.saveStoreName=saveStoreName;window.exportData=exportData;window.importData=importData;
+window.clearOrders=clearOrders;window.renderOrders=renderOrders;window.renderProducts=renderProducts;
 </script>
 </body>
   </html>
